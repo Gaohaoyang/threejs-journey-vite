@@ -5,7 +5,7 @@ import { html as formatHtml } from 'js-beautify'
 
 const repoName = '/threejs-journey-vite'
 
-// 获取所有的入口
+// Get all entry points
 const entryPoints = fs.readdirSync(__dirname).reduce((entries, dir) => {
   const fullDir = resolve(__dirname, dir)
   const entry = resolve(fullDir, 'index.html')
@@ -15,12 +15,12 @@ const entryPoints = fs.readdirSync(__dirname).reduce((entries, dir) => {
   return entries
 }, {})
 
-// 生成目录链接
+// Generate directory links
 const links = Object.keys(entryPoints)
   .map((dir) => `<li><a href="${repoName}/${dir}/index.html">${dir}</a></li>`)
   .join('\n')
 
-// 更新根目录的 index.html
+// Update the root directory's index.html
 const indexPath = resolve(__dirname, 'index.html')
 let indexHtml = fs.readFileSync(indexPath, 'utf-8')
 indexHtml = indexHtml.replace(/<ul>[\s\S]*?<\/ul>/, `<ul>${links}</ul>`)
