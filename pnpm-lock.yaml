@@ -8,17 +8,11 @@ dependencies:
   lil-gui:
     specifier: ^0.19.1
     version: 0.19.1
-  stats.js:
-    specifier: ^0.17.0
-    version: 0.17.0
   three:
     specifier: ^0.161.0
     version: 0.161.0
 
 devDependencies:
-  '@types/stats.js':
-    specifier: ^0.17.3
-    version: 0.17.3
   '@types/three':
     specifier: ^0.161.2
     version: 0.161.2
@@ -2251,10 +2245,6 @@ packages:
     resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}
     engines: {node: '>=0.10.0'}
     dev: true
-
-  /stats.js@0.17.0:
-    resolution: {integrity: sha512-hNKz8phvYLPEcRkeG1rsGmV5ChMjKDAWU7/OJJdDErPBNChQXxCo3WZurGpnWc6gZhAzEPFad1aVgyOANH1sMw==}
-    dev: false
 
   /string-width@4.2.3:
     resolution: {integrity: sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==}
