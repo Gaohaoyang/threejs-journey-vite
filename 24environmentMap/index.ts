@@ -8,12 +8,13 @@ import {
   AmbientLight,
   DirectionalLight,
   Clock,
+  AxesHelper,
 } from 'three'
 import { OrbitControls } from 'three-stdlib'
 import GUI from 'lil-gui'
 import { listenResize } from '../utils'
 import stats from '../utils/stats'
-import { ViewHelper } from 'three/examples/jsm/helpers/ViewHelper.js'
+import { createViewHelper } from '../utils/ViewHelper'
 
 /**
  * Base
@@ -57,8 +58,7 @@ const sizes = {
  */
 // Base camera
 const camera = new PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-camera.position.set(5, 5, 5)
-scene.add(camera)
+camera.position.set(3, 4, 5)
 
 /**
  * Light
@@ -68,6 +68,12 @@ scene.add(new AmbientLight(0x444444))
 const light = new DirectionalLight(0xffffff, 1)
 light.position.set(20, 20, 0)
 scene.add(light)
+
+/**
+ * AxesHelper
+ */
+const axesHelper = new AxesHelper(3)
+scene.add(axesHelper)
 
 /**
  * Renderer
@@ -82,25 +88,10 @@ renderer.autoClear = false
 
 // Controls
 const controls = new OrbitControls(camera, renderer.domElement)
-// controls.target.y = 3.5
 controls.enableDamping = true
 
 // helper
-const viewHelper = new ViewHelper(camera, renderer.domElement)
-// viewHelper.controls = controls
-// viewHelper.controls.center = controls.target
-
-const div = document.createElement('div')
-div.id = 'viewHelper'
-div.style.position = 'absolute'
-div.style.right = '0'
-div.style.bottom = '0'
-div.style.height = '128px'
-div.style.width = '128px'
-
-document.body.appendChild(div)
-
-div.addEventListener('pointerup', (event) => viewHelper.handleClick(event))
+const viewHelper = createViewHelper(camera, renderer.domElement)
 
 // clock
 const clock = new Clock()
