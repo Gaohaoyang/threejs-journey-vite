@@ -5,11 +5,13 @@ import {
   WebGLRenderer,
   MeshBasicMaterial,
   TorusKnotGeometry,
+  Clock,
 } from 'three'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { OrbitControls } from 'three-stdlib'
 import GUI from 'lil-gui'
 import { listenResize } from '../utils'
 import stats from '../utils/stats'
+import { ViewHelper } from 'three/examples/jsm/helpers/ViewHelper.js'
 
 /**
  * Base
@@ -49,11 +51,6 @@ const camera = new PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
 camera.position.set(4, 5, 4)
 scene.add(camera)
 
-// Controls
-const controls = new OrbitControls(camera, canvas)
-controls.target.y = 3.5
-controls.enableDamping = true
-
 /**
  * Renderer
  */
@@ -64,24 +61,41 @@ const renderer = new WebGLRenderer({
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
+// Controls
+const controls = new OrbitControls(camera, renderer.domElement)
+controls.target.y = 3.5
+controls.enableDamping = true
+
+// helper
+const viewHelper = new ViewHelper(camera, renderer.domElement)
+
+
 /**
  * Animate
  */
-// const clock = new THREE.Clock()
+// const clock = new Clock()
 const tick = (): void => {
   stats.begin()
+
   // Time
-  // const elapsedTime = clock.getElapsedTime()
+  // const delta = clock.getDelta()
 
   // Update controls
   controls.update()
 
+  // Update helper
+  // viewHelper.update(delta) // Update the helper
+
   // Render
   renderer.render(scene, camera)
+  // viewHelper.render(renderer)
 
-  stats.end()
+  // viewHelper.update(delta)
+  // viewHelper.render(renderer) // Render the helper
+
   // Call tick again on the next frame
   requestAnimationFrame(tick)
+  stats.end()
 }
 
 tick()
