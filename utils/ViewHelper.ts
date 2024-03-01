@@ -1,5 +1,5 @@
 import { type Camera } from 'three'
-import { ViewHelper } from 'three/examples/jsm/helpers/ViewHelper.js'
+import { ViewHelper } from 'three/addons/helpers/ViewHelper.js'
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const createViewHelper = (camera: Camera, canvasDom: HTMLCanvasElement) => {

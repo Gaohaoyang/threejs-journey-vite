@@ -23,5 +23,11 @@ module.exports = {
     '@typescript-eslint/comma-dangle': ['error', 'always-multiline'],
     // disable the rule for all files
     '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/strict-boolean-expressions': [
+      'error',
+      {
+        allowNullable: true,
+      },
+    ],
   },
 }
