@@ -99,7 +99,7 @@ const clock = new Clock()
 /**
  * Animate
  */
-const tick = (): void => {
+const tick = () => {
   stats.begin()
   renderer.clear()
 

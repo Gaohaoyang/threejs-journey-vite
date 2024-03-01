@@ -10,7 +10,7 @@ export const listenResize = (
   },
   camera: PerspectiveCamera,
   renderer: WebGLRenderer,
-): void => {
+) => {
   window.addEventListener('resize', () => {
     // update sizes
     sizes.width = window.innerWidth
