@@ -70,7 +70,7 @@ scene.add(torusKnot)
  * Load Model
  */
 const ktx2Loader = new KTX2Loader()
-  .setTranscoderPath('../utils/jsm_libs_basis/')
+  .setTranscoderPath('/threejs-journey-vite/jsm_libs_basis/')
   .detectSupport(renderer)
 const gltfLoader = new GLTFLoader()
 gltfLoader.setKTX2Loader(ktx2Loader)
