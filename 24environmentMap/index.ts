@@ -10,11 +10,13 @@ import {
   Clock,
   AxesHelper,
 } from 'three'
-import { OrbitControls } from 'three-stdlib'
 import GUI from 'lil-gui'
 import { listenResize } from '../utils'
 import stats from '../utils/stats'
 import { createViewHelper } from '../utils/ViewHelper'
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
+import { KTX2Loader } from 'three/addons/loaders/KTX2Loader.js'
 
 /**
  * Base
@@ -22,11 +24,30 @@ import { createViewHelper } from '../utils/ViewHelper'
 // Debug
 const gui = new GUI()
 
+/**
+ * Sizes
+ */
+const sizes = {
+  width: window.innerWidth,
+  height: window.innerHeight,
+}
+
 // Canvas
 const canvas = document.querySelector<HTMLCanvasElement>('canvas.webgl')
 if (canvas === null) {
   throw new Error('Cannot find the canvas element')
 }
+
+/**
+ * Renderer
+ */
+const renderer = new WebGLRenderer({
+  canvas,
+  antialias: true,
+})
+renderer.setSize(sizes.width, sizes.height)
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+renderer.autoClear = false
 
 // Scene
 const scene = new Scene()
@@ -46,12 +67,20 @@ const torusKnot = new Mesh(
 scene.add(torusKnot)
 
 /**
- * Sizes
+ * Load Model
  */
-const sizes = {
-  width: window.innerWidth,
-  height: window.innerHeight,
-}
+const ktx2Loader = new KTX2Loader()
+  .setTranscoderPath('../utils/jsm_libs_basis/')
+  .detectSupport(renderer)
+const gltfLoader = new GLTFLoader()
+gltfLoader.setKTX2Loader(ktx2Loader)
+gltfLoader.load(
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/models/FlightHelmet/glTF-KTX-BasisU/FlightHelmet.gltf',
+  (gltf) => {
+    console.log('success')
+    console.log(gltf)
+  },
+)
 
 /**
  * Camera
@@ -74,17 +103,6 @@ scene.add(light)
  */
 const axesHelper = new AxesHelper(3)
 scene.add(axesHelper)
-
-/**
- * Renderer
- */
-const renderer = new WebGLRenderer({
-  canvas,
-  antialias: true,
-})
-renderer.setSize(sizes.width, sizes.height)
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-renderer.autoClear = false
 
 // Controls
 const controls = new OrbitControls(camera, renderer.domElement)
