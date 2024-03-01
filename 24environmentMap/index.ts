@@ -17,6 +17,7 @@ import { createViewHelper } from '../utils/ViewHelper'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import { KTX2Loader } from 'three/addons/loaders/KTX2Loader.js'
+import { repoName } from '../utils/constants'
 
 /**
  * Base
@@ -70,7 +71,7 @@ scene.add(torusKnot)
  * Load Model
  */
 const ktx2Loader = new KTX2Loader()
-  .setTranscoderPath('/threejs-journey-vite/jsm_libs_basis/')
+  .setTranscoderPath(`${repoName}/jsm_libs_basis/`)
   .detectSupport(renderer)
 const gltfLoader = new GLTFLoader()
 gltfLoader.setKTX2Loader(ktx2Loader)

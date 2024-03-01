@@ -2,8 +2,9 @@ import { resolve } from 'path'
 import { defineConfig } from 'vite'
 import fs from 'fs'
 import { html as formatHtml } from 'js-beautify'
+import { repoName } from './utils/constants'
 
-const repoName = '/threejs-journey-vite'
+// export const repoName = '/threejs-journey-vite'
 
 // Get all entry points
 const entryPoints = fs.readdirSync(__dirname).reduce((entries, dir) => {
