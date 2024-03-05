@@ -9,6 +9,7 @@ import {
   DirectionalLight,
   Clock,
   AxesHelper,
+  LoadingManager,
 } from 'three'
 import GUI from 'lil-gui'
 import { listenResize } from '../utils'
@@ -68,18 +69,51 @@ const torusKnot = new Mesh(
 scene.add(torusKnot)
 
 /**
+ * LoadingManager
+ */
+const loadingManager = new LoadingManager()
+loadingManager.onStart = (url, itemsLoaded, itemsTotal) => {
+  console.log(`Started loading file: ${url}.\nLoaded ${itemsLoaded} of ${itemsTotal} files.`)
+}
+loadingManager.onProgress = (url, itemsLoaded, itemsTotal) => {
+  console.log(`Loading file: ${url}.\nLoaded ${itemsLoaded} of ${itemsTotal} files.`)
+}
+loadingManager.onLoad = () => {
+  console.log('Loading complete!')
+  console.log('success')
+}
+
+const ktx2LoaderManager = new LoadingManager()
+ktx2LoaderManager.onStart = (url, itemsLoaded, itemsTotal) => {
+  console.log(
+    `ktx2LoaderManager Started loading file: ${url}.\nLoaded ${itemsLoaded} of ${itemsTotal} files.`,
+  )
+}
+ktx2LoaderManager.onProgress = (url, itemsLoaded, itemsTotal) => {
+  console.log(
+    `ktx2LoaderManager Loading file: ${url}.\nLoaded ${itemsLoaded} of ${itemsTotal} files.`,
+  )
+}
+ktx2LoaderManager.onLoad = () => {
+  console.log('ktx2LoaderManager Loading complete!')
+  console.log('ktx2LoaderManager success')
+}
+
+/**
  * Load Model
  */
-const ktx2Loader = new KTX2Loader()
+const ktx2Loader = new KTX2Loader(ktx2LoaderManager)
   .setTranscoderPath(`${repoName}/jsm_libs_basis/`)
   .detectSupport(renderer)
-const gltfLoader = new GLTFLoader()
+const gltfLoader = new GLTFLoader(loadingManager)
 gltfLoader.setKTX2Loader(ktx2Loader)
 gltfLoader.load(
   'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/models/FlightHelmet/glTF-KTX-BasisU/FlightHelmet.gltf',
   (gltf) => {
     console.log('success')
     console.log(gltf)
+    gltf.scene.scale.set(10, 10, 10)
+    scene.add(gltf.scene)
   },
 )
 
@@ -87,8 +121,8 @@ gltfLoader.load(
  * Camera
  */
 // Base camera
-const camera = new PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-camera.position.set(3, 4, 5)
+const camera = new PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 1000)
+camera.position.set(6, 8, 10)
 
 /**
  * Light
