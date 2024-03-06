@@ -9,7 +9,6 @@ import {
   DirectionalLight,
   Clock,
   AxesHelper,
-  LoadingManager,
 } from 'three'
 import GUI from 'lil-gui'
 import { listenResize } from '../utils'
@@ -19,6 +18,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import { KTX2Loader } from 'three/addons/loaders/KTX2Loader.js'
 import { repoName } from '../utils/constants'
+import { startLoading, hideLoading } from '../utils/LoadManagerWithProgress'
 
 /**
  * Base
@@ -71,33 +71,13 @@ scene.add(torusKnot)
 /**
  * LoadingManager
  */
-const loadingManager = new LoadingManager()
-loadingManager.onStart = (url, itemsLoaded, itemsTotal) => {
-  console.log(`Started loading file: ${url}.\nLoaded ${itemsLoaded} of ${itemsTotal} files.`)
-}
-loadingManager.onProgress = (url, itemsLoaded, itemsTotal) => {
-  console.log(`Loading file: ${url}.\nLoaded ${itemsLoaded} of ${itemsTotal} files.`)
-}
-loadingManager.onLoad = () => {
-  console.log('Loading complete!')
-  console.log('success')
-}
-
-const ktx2LoaderManager = new LoadingManager()
-ktx2LoaderManager.onStart = (url, itemsLoaded, itemsTotal) => {
-  console.log(
-    `ktx2LoaderManager Started loading file: ${url}.\nLoaded ${itemsLoaded} of ${itemsTotal} files.`,
-  )
-}
-ktx2LoaderManager.onProgress = (url, itemsLoaded, itemsTotal) => {
-  console.log(
-    `ktx2LoaderManager Loading file: ${url}.\nLoaded ${itemsLoaded} of ${itemsTotal} files.`,
-  )
-}
-ktx2LoaderManager.onLoad = () => {
-  console.log('ktx2LoaderManager Loading complete!')
-  console.log('ktx2LoaderManager success')
-}
+const gltfLoaderManager = startLoading({
+  title: 'gltf',
+  onLoad: () => {
+    hideLoading()
+  },
+})
+const ktx2LoaderManager = startLoading({ title: 'ktx2' })
 
 /**
  * Load Model
@@ -105,7 +85,7 @@ ktx2LoaderManager.onLoad = () => {
 const ktx2Loader = new KTX2Loader(ktx2LoaderManager)
   .setTranscoderPath(`${repoName}/jsm_libs_basis/`)
   .detectSupport(renderer)
-const gltfLoader = new GLTFLoader(loadingManager)
+const gltfLoader = new GLTFLoader(gltfLoaderManager)
 gltfLoader.setKTX2Loader(ktx2Loader)
 gltfLoader.load(
   'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/models/FlightHelmet/glTF-KTX-BasisU/FlightHelmet.gltf',
