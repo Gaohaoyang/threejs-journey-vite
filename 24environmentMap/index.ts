@@ -18,6 +18,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import { KTX2Loader } from 'three/addons/loaders/KTX2Loader.js'
 import { repoName } from '../utils/constants'
+import { startLoading, hideLoading } from '../utils/LoadManagerWithProgress'
 
 /**
  * Base
@@ -68,18 +69,31 @@ const torusKnot = new Mesh(
 scene.add(torusKnot)
 
 /**
+ * LoadingManager
+ */
+const gltfLoaderManager = startLoading({
+  title: 'gltf',
+  onLoad: () => {
+    hideLoading()
+  },
+})
+const ktx2LoaderManager = startLoading({ title: 'ktx2' })
+
+/**
  * Load Model
  */
-const ktx2Loader = new KTX2Loader()
+const ktx2Loader = new KTX2Loader(ktx2LoaderManager)
   .setTranscoderPath(`${repoName}/jsm_libs_basis/`)
   .detectSupport(renderer)
-const gltfLoader = new GLTFLoader()
+const gltfLoader = new GLTFLoader(gltfLoaderManager)
 gltfLoader.setKTX2Loader(ktx2Loader)
 gltfLoader.load(
   'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/models/FlightHelmet/glTF-KTX-BasisU/FlightHelmet.gltf',
   (gltf) => {
     console.log('success')
     console.log(gltf)
+    gltf.scene.scale.set(10, 10, 10)
+    scene.add(gltf.scene)
   },
 )
 
@@ -87,8 +101,8 @@ gltfLoader.load(
  * Camera
  */
 // Base camera
-const camera = new PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-camera.position.set(3, 4, 5)
+const camera = new PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 1000)
+camera.position.set(6, 8, 10)
 
 /**
  * Light

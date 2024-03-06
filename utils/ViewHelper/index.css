@@ -1,0 +1,13 @@
+#viewHelper {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  width: 92px;
+  height: 92px;
+  border-radius: 999px;
+  transition: background .3s;
+}
+
+#viewHelper:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
