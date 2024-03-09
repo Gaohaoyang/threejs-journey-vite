@@ -9,6 +9,7 @@ import {
   DirectionalLight,
   Clock,
   AxesHelper,
+  CubeTextureLoader,
 } from 'three'
 import GUI from 'lil-gui'
 import { listenResize } from '../utils'
@@ -71,11 +72,9 @@ scene.add(torusKnot)
 /**
  * LoadingManager
  */
+const environmentMapManager = startLoading({ title: 'environment map' })
 const gltfLoaderManager = startLoading({
   title: 'gltf',
-  onLoad: () => {
-    hideLoading()
-  },
 })
 const ktx2LoaderManager = startLoading({ title: 'ktx2' })
 
@@ -96,6 +95,19 @@ gltfLoader.load(
     scene.add(gltf.scene)
   },
 )
+
+/**
+ * Environment Map
+ */
+const cubeTextureLoader = new CubeTextureLoader(environmentMapManager)
+cubeTextureLoader.load([
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/symmetricalGarden/px.png',
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/symmetricalGarden/nx.png',
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/symmetricalGarden/py.png',
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/symmetricalGarden/ny.png',
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/symmetricalGarden/pz.png',
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/symmetricalGarden/nz.png',
+])
 
 /**
  * Camera
