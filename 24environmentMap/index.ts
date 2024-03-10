@@ -117,12 +117,12 @@ const rgbeLoader = new RGBELoader(environmentMapManager)
 rgbeLoader.load(
   // 'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/symmetricalGarden/symmetrical_garden_02_2k.hdr',
   // 'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/cobbleStoneStreetNight/cobblestone_street_night_2k.hdr',
-  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/madeWithBlender/blender2k.hdr',
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/madeWithBlender/blenderThreeLight.hdr',
   (environmentMap) => {
     // console.log('environmentMap', environmentMap)
     environmentMap.mapping = EquirectangularReflectionMapping
     scene.environment = environmentMap
-    scene.background = environmentMap
+    // scene.background = environmentMap
   },
 )
 // console.log('res', res)
