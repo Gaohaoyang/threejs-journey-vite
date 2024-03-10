@@ -3,16 +3,12 @@ import {
   Mesh,
   PerspectiveCamera,
   WebGLRenderer,
-  // MeshPhongMaterial,
   TorusKnotGeometry,
-  // AmbientLight,
-  // DirectionalLight,
   Clock,
   AxesHelper,
   CubeTextureLoader,
   MeshStandardMaterial,
   EquirectangularReflectionMapping,
-  // Material,
 } from 'three'
 import GUI from 'lil-gui'
 import { listenResize } from '../utils'
@@ -116,18 +112,16 @@ const ktx2LoaderManager = startLoading({ title: 'ktx2' })
 const rgbeLoader = new RGBELoader(environmentMapManager)
 rgbeLoader.load(
   // 'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/symmetricalGarden/symmetrical_garden_02_2k.hdr',
-  // 'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/cobbleStoneStreetNight/cobblestone_street_night_2k.hdr',
-  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/madeWithBlender/blenderThreeLight.hdr',
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/cobbleStoneStreetNight/cobblestone_street_night_2k.hdr',
+  // 'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/madeWithBlender/blenderThreeLight.hdr',
   (environmentMap) => {
     // console.log('environmentMap', environmentMap)
     environmentMap.mapping = EquirectangularReflectionMapping
     scene.environment = environmentMap
-    // scene.background = environmentMap
+    scene.background = environmentMap
   },
 )
 // console.log('res', res)
-
-// environmentMap.mapping = EquirectangularReflectionMapping
 
 scene.backgroundBlurriness = 0
 scene.backgroundIntensity = 1
