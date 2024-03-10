@@ -3,15 +3,15 @@ import {
   Mesh,
   PerspectiveCamera,
   WebGLRenderer,
-  MeshPhongMaterial,
+  // MeshPhongMaterial,
   TorusKnotGeometry,
-  AmbientLight,
-  DirectionalLight,
+  // AmbientLight,
+  // DirectionalLight,
   Clock,
   AxesHelper,
   CubeTextureLoader,
   MeshStandardMaterial,
-  Material,
+  // Material,
 } from 'three'
 import GUI from 'lil-gui'
 import { listenResize } from '../utils'
@@ -89,14 +89,14 @@ const ktx2LoaderManager = startLoading({ title: 'ktx2' })
  */
 const cubeTextureLoader = new CubeTextureLoader(environmentMapManager)
 // LDR cube texture
-const symmetricalGarden = [
-  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/symmetricalGarden/px.png',
-  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/symmetricalGarden/nx.png',
-  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/symmetricalGarden/py.png',
-  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/symmetricalGarden/ny.png',
-  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/symmetricalGarden/pz.png',
-  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/symmetricalGarden/nz.png',
-]
+// const symmetricalGarden = [
+//   'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/symmetricalGarden/px.png',
+//   'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/symmetricalGarden/nx.png',
+//   'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/symmetricalGarden/py.png',
+//   'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/symmetricalGarden/ny.png',
+//   'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/symmetricalGarden/pz.png',
+//   'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/symmetricalGarden/nz.png',
+// ]
 const cobbleStoneStreetNight = [
   'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/cobbleStoneStreetNight/px.png',
   'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/cobbleStoneStreetNight/nx.png',
