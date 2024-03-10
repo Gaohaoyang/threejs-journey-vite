@@ -208,6 +208,13 @@ tick()
 listenResize(sizes, camera, renderer)
 
 gui.add(controls, 'autoRotate')
-gui.add(debugObject, 'envMapIntensity').min(0).max(10).step(0.001).onChange(updateAllMaterials)
-gui.add(scene, 'backgroundBlurriness').min(0).max(1).step(0.001)
-gui.add(scene, 'backgroundIntensity').min(0).max(5).step(0.001)
+const guiEnvironment = gui.addFolder('Environment')
+
+guiEnvironment
+  .add(debugObject, 'envMapIntensity')
+  .min(0)
+  .max(10)
+  .step(0.001)
+  .onChange(updateAllMaterials)
+guiEnvironment.add(scene, 'backgroundBlurriness').min(0).max(0.2).step(0.001)
+guiEnvironment.add(scene, 'backgroundIntensity').min(0).max(5).step(0.001)
