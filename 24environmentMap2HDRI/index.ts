@@ -3,15 +3,12 @@ import {
   Mesh,
   PerspectiveCamera,
   WebGLRenderer,
-  // MeshPhongMaterial,
   TorusKnotGeometry,
-  // AmbientLight,
-  // DirectionalLight,
   Clock,
   AxesHelper,
   CubeTextureLoader,
   MeshStandardMaterial,
-  // Material,
+  EquirectangularReflectionMapping,
 } from 'three'
 import GUI from 'lil-gui'
 import { listenResize } from '../utils'
@@ -22,6 +19,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import { KTX2Loader } from 'three/addons/loaders/KTX2Loader.js'
 import { repoName } from '../utils/constants'
 import { startLoading } from '../utils/LoadManagerWithProgress'
+import { RGBELoader } from 'three/examples/jsm/Addons.js'
 
 /**
  * Base
@@ -29,7 +27,7 @@ import { startLoading } from '../utils/LoadManagerWithProgress'
 // Debug
 const gui = new GUI()
 const debugObject = {
-  envMapIntensity: 3,
+  envMapIntensity: 1,
 }
 
 /**
@@ -87,7 +85,7 @@ const ktx2LoaderManager = startLoading({ title: 'ktx2' })
 /**
  * Environment Map
  */
-const cubeTextureLoader = new CubeTextureLoader(environmentMapManager)
+// const cubeTextureLoader = new CubeTextureLoader(environmentMapManager)
 // LDR cube texture
 // const symmetricalGarden = [
 //   'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/symmetricalGarden/px.png',
@@ -97,18 +95,36 @@ const cubeTextureLoader = new CubeTextureLoader(environmentMapManager)
 //   'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/symmetricalGarden/pz.png',
 //   'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/symmetricalGarden/nz.png',
 // ]
-const cobbleStoneStreetNight = [
-  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/cobbleStoneStreetNight/px.png',
-  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/cobbleStoneStreetNight/nx.png',
-  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/cobbleStoneStreetNight/py.png',
-  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/cobbleStoneStreetNight/ny.png',
-  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/cobbleStoneStreetNight/pz.png',
-  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/cobbleStoneStreetNight/nz.png',
-]
+// const cobbleStoneStreetNight = [
+//   'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/cobbleStoneStreetNight/px.png',
+//   'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/cobbleStoneStreetNight/nx.png',
+//   'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/cobbleStoneStreetNight/py.png',
+//   'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/cobbleStoneStreetNight/ny.png',
+//   'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/cobbleStoneStreetNight/pz.png',
+//   'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/cobbleStoneStreetNight/nz.png',
+// ]
 // const environmentMap = cubeTextureLoader.load(symmetricalGarden)
-const environmentMap = cubeTextureLoader.load(cobbleStoneStreetNight)
-scene.environment = environmentMap
-scene.background = environmentMap
+// const environmentMap = cubeTextureLoader.load(cobbleStoneStreetNight)
+// scene.environment = environmentMap
+// scene.background = environmentMap
+
+// HDR
+const rgbeLoader = new RGBELoader(environmentMapManager)
+rgbeLoader.load(
+  // 'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/symmetricalGarden/symmetrical_garden_02_2k.hdr',
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/cobbleStoneStreetNight/cobblestone_street_night_2k.hdr',
+  // 'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/madeWithBlender/blenderThreeLight.hdr',
+  (environmentMap) => {
+    // console.log('environmentMap', environmentMap)
+    environmentMap.mapping = EquirectangularReflectionMapping
+    scene.environment = environmentMap
+    scene.background = environmentMap
+  },
+)
+// console.log('res', res)
+
+scene.backgroundBlurriness = 0
+scene.backgroundIntensity = 1
 
 /**
  * Load Model
@@ -137,7 +153,7 @@ const torusKnot = new Mesh(
     roughness: 0.3,
     metalness: 1,
     color: 0xaaaaaa,
-    envMap: environmentMap,
+    // envMap: environmentMap,
   }),
 )
 torusKnot.position.set(-4, 0, 0)
@@ -149,7 +165,7 @@ scene.add(torusKnot)
  */
 // Base camera
 const camera = new PerspectiveCamera(70, sizes.width / sizes.height, 0.1, 1000)
-camera.position.set(3, 5, 7)
+camera.position.set(1.3, 3, 8)
 
 /**
  * Light
@@ -206,4 +222,13 @@ tick()
 listenResize(sizes, camera, renderer)
 
 gui.add(controls, 'autoRotate')
-gui.add(debugObject, 'envMapIntensity').min(0).max(10).step(0.001).onChange(updateAllMaterials)
+const guiEnvironment = gui.addFolder('Environment')
+
+guiEnvironment.add(scene, 'backgroundBlurriness').min(0).max(0.2).step(0.001)
+guiEnvironment.add(scene, 'backgroundIntensity').min(0).max(5).step(0.001)
+guiEnvironment
+  .add(debugObject, 'envMapIntensity')
+  .min(0)
+  .max(10)
+  .step(0.001)
+  .onChange(updateAllMaterials)
