@@ -109,6 +109,8 @@ const cobbleStoneStreetNight = [
 const environmentMap = cubeTextureLoader.load(cobbleStoneStreetNight)
 scene.environment = environmentMap
 scene.background = environmentMap
+scene.backgroundBlurriness = 0
+scene.backgroundIntensity = 1
 
 /**
  * Load Model
@@ -207,3 +209,5 @@ listenResize(sizes, camera, renderer)
 
 gui.add(controls, 'autoRotate')
 gui.add(debugObject, 'envMapIntensity').min(0).max(10).step(0.001).onChange(updateAllMaterials)
+gui.add(scene, 'backgroundBlurriness').min(0).max(1).step(0.001)
+gui.add(scene, 'backgroundIntensity').min(0).max(5).step(0.001)
