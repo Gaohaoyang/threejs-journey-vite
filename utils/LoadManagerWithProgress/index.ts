@@ -1,13 +1,16 @@
 import { LoadingManager } from 'three'
 import './index.css'
+import { initLoadItem, startLoadItem, loadedLoadItem, errorLoadItem, isAllLoaded } from './loadList'
 
 interface StartLoading {
-  title?: string
+  title: string
   onLoad?: () => void
 }
 
 export const startLoading = (param: StartLoading) => {
-  const { title = '', onLoad } = param
+  const { title, onLoad } = param
+  initLoadItem(title)
+
   const loadingElementWrap = getLoadingElementWrap()
   const {
     divInner: progressBarInnerEle,
@@ -18,6 +21,7 @@ export const startLoading = (param: StartLoading) => {
   manager.onStart = (url, itemsLoaded, itemsTotal) => {
     console.log(`Started loading file: ${url}.\nLoaded ${itemsLoaded} of ${itemsTotal} files.`)
     divTitleEle.textContent = `${title} loading ...`
+    startLoadItem(title)
   }
   manager.onProgress = (url, itemsLoaded, itemsTotal) => {
     console.log(`Loading file: ${url}.\nLoaded ${itemsLoaded} of ${itemsTotal} files.`)
@@ -26,12 +30,18 @@ export const startLoading = (param: StartLoading) => {
   }
   manager.onError = (url) => {
     console.log(`There was an error loading ${url}`)
+    errorLoadItem(title)
   }
   manager.onLoad = () => {
     onLoad && onLoad()
     console.log('Loading complete!')
     console.log('success')
     divTitleEle.textContent = `${title} loading completed!`
+    loadedLoadItem(title)
+    if (isAllLoaded()) {
+      console.log('All loaded!')
+      hideLoading()
+    }
   }
   return manager
 }
