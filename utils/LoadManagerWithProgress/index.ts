@@ -39,6 +39,7 @@ export const startLoading = (param: StartLoading) => {
     divTitleEle.textContent = `${title} loading completed!`
     loadedLoadItem(title)
     if (isAllLoaded()) {
+      console.log('All loaded!')
       hideLoading()
     }
   }
