@@ -1,6 +1,16 @@
-import { PerspectiveCamera } from 'three'
+import { OrthographicCamera } from 'three'
 import { sizes } from './utils'
 
+const scale = 220
+
 // Base camera
-export const camera = new PerspectiveCamera(70, sizes.width / sizes.height, 0.1, 1000)
-camera.position.set(1.3, 3, 8)
+const aspectRatio = sizes.width / sizes.height
+export const camera = new OrthographicCamera(
+  -1 * aspectRatio * scale,
+  1 * aspectRatio * scale,
+  scale,
+  -scale,
+  1,
+  1000,
+)
+camera.position.set(200, 100, 200)

@@ -8,6 +8,7 @@ import { tick } from './tick'
 import './lights'
 import './axesHelper'
 import './objectTorusKnot'
+import './objectFloorAndWalls'
 
 tick()
 

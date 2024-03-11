@@ -4,6 +4,6 @@ import { scene } from './scene'
 /**
  * AxesHelper
  */
-const axesHelper = new AxesHelper(3)
-axesHelper.position.set(0, -3, 0)
+const axesHelper = new AxesHelper(200)
+axesHelper.position.set(0, 0, 0)
 scene.add(axesHelper)
