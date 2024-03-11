@@ -1,12 +1,12 @@
 import {
   Scene,
-  Mesh,
+  type Mesh,
   PerspectiveCamera,
   WebGLRenderer,
   // TorusKnotGeometry,
   Clock,
   AxesHelper,
-  MeshStandardMaterial,
+  type MeshStandardMaterial,
   EquirectangularReflectionMapping,
 } from 'three'
 import GUI from 'lil-gui'
