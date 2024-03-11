@@ -1,15 +1,15 @@
 import {
-  Scene,
-  type Mesh,
+  // Scene,
+  Mesh,
   PerspectiveCamera,
   WebGLRenderer,
-  // TorusKnotGeometry,
+  TorusKnotGeometry,
   Clock,
   AxesHelper,
-  type MeshStandardMaterial,
-  EquirectangularReflectionMapping,
+  CubeTextureLoader,
+  MeshStandardMaterial,
 } from 'three'
-import GUI from 'lil-gui'
+import { gui, debugObject } from './gui'
 import { listenResize } from '../utils'
 import stats from '../utils/stats'
 import { createViewHelper } from '../utils/ViewHelper'
@@ -18,17 +18,11 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import { KTX2Loader } from 'three/addons/loaders/KTX2Loader.js'
 import { repoName } from '../utils/constants'
 import { startLoading } from '../utils/LoadManagerWithProgress'
-import { RGBELoader } from 'three/examples/jsm/Addons.js'
+import { scene } from './scene'
 
 /**
  * Base
  */
-// Debug
-const gui = new GUI()
-const debugObject = {
-  envMapIntensity: 1,
-}
-gui.close()
 
 /**
  * Sizes
@@ -55,9 +49,6 @@ renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 renderer.autoClear = false
 
-// Scene
-const scene = new Scene()
-
 /**
  * Update all materials
  */
@@ -82,19 +73,49 @@ const gltfLoaderManager = startLoading({
 })
 const ktx2LoaderManager = startLoading({ title: 'ktx2' })
 
-// HDR
-const rgbeLoader = new RGBELoader(environmentMapManager)
-rgbeLoader.load(
-  // 'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/symmetricalGarden/symmetrical_garden_02_2k.hdr',
-  // 'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/cobbleStoneStreetNight/cobblestone_street_night_2k.hdr',
-  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/madeWithBlender/blenderThreeLight.hdr',
-  (environmentMap) => {
-    // console.log('environmentMap', environmentMap)
-    environmentMap.mapping = EquirectangularReflectionMapping
-    scene.environment = environmentMap
-    // scene.background = environmentMap
-  },
-)
+/**
+ * Environment Map
+ */
+const cubeTextureLoader = new CubeTextureLoader(environmentMapManager)
+// LDR cube texture
+const symmetricalGarden = [
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/symmetricalGarden/px.png',
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/symmetricalGarden/nx.png',
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/symmetricalGarden/py.png',
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/symmetricalGarden/ny.png',
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/symmetricalGarden/pz.png',
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/symmetricalGarden/nz.png',
+]
+const cobbleStoneStreetNight = [
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/cobbleStoneStreetNight/px.png',
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/cobbleStoneStreetNight/nx.png',
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/cobbleStoneStreetNight/py.png',
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/cobbleStoneStreetNight/ny.png',
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/cobbleStoneStreetNight/pz.png',
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/cobbleStoneStreetNight/nz.png',
+]
+// const environmentMap = cubeTextureLoader.load(symmetricalGarden)
+const environmentMap = cubeTextureLoader.load(cobbleStoneStreetNight)
+scene.environment = environmentMap
+scene.background = environmentMap
+
+// // HDR
+// const rgbeLoader = new RGBELoader(environmentMapManager)
+// rgbeLoader.load(
+//   // 'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/symmetricalGarden/symmetrical_garden_02_2k.hdr',
+//   'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/cobbleStoneStreetNight/cobblestone_street_night_2k.hdr',
+//   // 'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/environmentMap/madeWithBlender/blenderThreeLight.hdr',
+//   (environmentMap) => {
+//     // console.log('environmentMap', environmentMap)
+//     environmentMap.mapping = EquirectangularReflectionMapping
+//     scene.environment = environmentMap
+//     scene.background = environmentMap
+//   },
+// )
+// console.log('res', res)
+
+scene.backgroundBlurriness = 0
+scene.backgroundIntensity = 1
 
 /**
  * Load Model
@@ -117,20 +138,23 @@ gltfLoader.load(
 /**
  * Torus Knot
  */
-// const torusKnot = new Mesh(
-//   new TorusKnotGeometry(1, 0.4, 100, 16),
-//   new MeshStandardMaterial({
-//     roughness: 0.3,
-//     metalness: 1,
-//     color: 0xaaaaaa,
-//   }),
-// )
-// torusKnot.position.set(-4, 0, 0)
-// scene.add(torusKnot)
+const torusKnot = new Mesh(
+  new TorusKnotGeometry(1, 0.4, 100, 16),
+  new MeshStandardMaterial({
+    roughness: 0.3,
+    metalness: 1,
+    color: 0xaaaaaa,
+    // envMap: environmentMap,
+  }),
+)
+torusKnot.position.set(-4, 0, 0)
+// torusKnot.position.y = 4
+scene.add(torusKnot)
 
 /**
  * Camera
  */
+// Base camera
 const camera = new PerspectiveCamera(70, sizes.width / sizes.height, 0.1, 1000)
 camera.position.set(1.3, 3, 8)
 
@@ -139,13 +163,11 @@ camera.position.set(1.3, 3, 8)
  */
 const axesHelper = new AxesHelper(5)
 axesHelper.position.set(0, -3, 0)
-axesHelper.visible = false
 scene.add(axesHelper)
 
 // Controls
 const controls = new OrbitControls(camera, renderer.domElement)
 controls.enableDamping = true
-controls.autoRotate = true
 
 // helper
 const viewHelper = createViewHelper(camera, renderer.domElement)
@@ -182,15 +204,13 @@ tick()
 listenResize(sizes, camera, renderer)
 
 gui.add(controls, 'autoRotate')
-gui.add(axesHelper, 'visible').name('Axes Helper')
 const guiEnvironment = gui.addFolder('Environment')
 
-// guiEnvironment.add(scene, 'backgroundBlurriness').min(0).max(0.2).step(0.001)
-// guiEnvironment.add(scene, 'backgroundIntensity').min(0).max(5).step(0.001)
+guiEnvironment.add(scene, 'backgroundBlurriness').min(0).max(0.2).step(0.001)
+guiEnvironment.add(scene, 'backgroundIntensity').min(0).max(5).step(0.001)
 guiEnvironment
   .add(debugObject, 'envMapIntensity')
   .min(0)
   .max(10)
   .step(0.001)
   .onChange(updateAllMaterials)
-// gui.close()

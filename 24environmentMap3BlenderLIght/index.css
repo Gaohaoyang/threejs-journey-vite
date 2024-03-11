@@ -14,13 +14,3 @@ body {
   left: 0;
   outline: none;
 }
-
-.viewHelper {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 128px;
-  height: 128px;
-  z-index: 2;
-
-}
