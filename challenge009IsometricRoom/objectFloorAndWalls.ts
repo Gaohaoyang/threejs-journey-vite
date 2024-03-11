@@ -5,12 +5,12 @@ import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.j
 /**
  * Floor
  */
-const floorGeometry = new RoundedBoxGeometry(400, 10, 300, 2, 3)
+const floorGeometry = new RoundedBoxGeometry(400, 8, 300, 4, 2)
 const floorMaterial = new MeshStandardMaterial({
   roughness: 1,
   metalness: 0,
   wireframe: false,
 })
 const floor = new Mesh(floorGeometry, floorMaterial)
-// floor.position.set(-4, 0, 0)
+floor.position.set(0, -4, 0)
 scene.add(floor)
