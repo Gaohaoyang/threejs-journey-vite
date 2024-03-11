@@ -7,7 +7,7 @@ import { controls } from './controls'
 import { tick } from './tick'
 import './lights'
 import './axesHelper'
-import './objectTorusKnot'
+// import './objectTorusKnot'
 import './objectFloorAndWalls'
 
 tick()
