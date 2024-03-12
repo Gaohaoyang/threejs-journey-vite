@@ -1,4 +1,4 @@
-import { WebGLRenderer } from 'three'
+import { WebGLRenderer, PCFSoftShadowMap } from 'three'
 import { sizes } from './utils'
 
 // Canvas
@@ -18,3 +18,4 @@ renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 renderer.autoClear = false
 renderer.shadowMap.enabled = true
+renderer.shadowMap.type = PCFSoftShadowMap
