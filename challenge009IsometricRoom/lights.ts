@@ -4,7 +4,7 @@ import { scene } from './scene'
 const ambientLight = new AmbientLight('#ffffff', 0.3)
 scene.add(ambientLight)
 
-const directionalLight = new DirectionalLight('#ffffff', 3)
+const directionalLight = new DirectionalLight('#ffffff', 1)
 directionalLight.position.set(10, 20, -30)
 
 directionalLight.castShadow = true
@@ -17,6 +17,8 @@ directionalLight.shadow.camera.top = 33
 directionalLight.shadow.camera.right = 33
 directionalLight.shadow.camera.bottom = -33
 directionalLight.shadow.camera.left = -33
+
+directionalLight.shadow.normalBias = 0.12
 
 scene.add(directionalLight)
 
