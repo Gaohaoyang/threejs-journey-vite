@@ -5,6 +5,7 @@ import { controls } from './controls'
 import { renderer } from './renderer'
 import { scene } from './scene'
 import { viewHelper } from './viewHelper'
+import { groupConstructionBoxHelper } from './objectFloorAndWalls'
 
 // clock
 const clock = new Clock()
@@ -15,6 +16,8 @@ const clock = new Clock()
 export const tick = () => {
   stats.begin()
   renderer.clear()
+
+  groupConstructionBoxHelper.update()
 
   // Update controls
   controls.update()

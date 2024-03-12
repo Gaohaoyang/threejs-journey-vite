@@ -11,7 +11,7 @@
   "dependencies": {
     "lil-gui": "^0.19.1",
     "three": "^0.162.0",
-    "three-csg-ts": "^3.1.14"
+    "three-bvh-csg": "^0.0.16"
   },
   "devDependencies": {
     "@types/three": "^0.162.0",
