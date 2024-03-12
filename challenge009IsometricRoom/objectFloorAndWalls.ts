@@ -5,14 +5,14 @@ import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.j
 /**
  * Floor
  */
-const floorGeometry = new RoundedBoxGeometry(400, 8, 300, 8, 2)
+const floorGeometry = new RoundedBoxGeometry(40.0, 0.8, 30.0, 8, 0.2)
 const floorMaterial = new MeshStandardMaterial({
   roughness: 1,
   metalness: 0,
   wireframe: false,
 })
 const floor = new Mesh(floorGeometry, floorMaterial)
-floor.position.set(0, -4, 0)
+floor.position.set(0, -0.4, 0)
 
 /**
  * Walls
@@ -22,13 +22,13 @@ const wallMaterial = new MeshStandardMaterial({
   metalness: 0,
   wireframe: false,
 })
-const leftWallGeometry = new RoundedBoxGeometry(8, 268, 300, 8, 2)
+const leftWallGeometry = new RoundedBoxGeometry(0.8, 26.8, 30.0, 8, 0.2)
 const lefWall = new Mesh(leftWallGeometry, wallMaterial)
-lefWall.position.set(-204, 126, 0)
+lefWall.position.set(-20.4, 12.6, 0)
 
-const rightWallGeometry = new RoundedBoxGeometry(400 + 8, 268, 8, 8, 2)
+const rightWallGeometry = new RoundedBoxGeometry(40.0 + 0.8, 26.8, 0.8, 8, 0.2)
 const rightWall = new Mesh(rightWallGeometry, wallMaterial)
-rightWall.position.set(-4, 134 - 8, -150 - 4)
+rightWall.position.set(-0.4, 13.4 - 0.8, -15.0 - 0.4)
 
 const groupConstruction = new Group()
 groupConstruction.add(floor)
