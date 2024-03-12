@@ -1,4 +1,4 @@
-import { type OrthographicCamera, type PerspectiveCamera, type WebGLRenderer } from 'three'
+import { type PerspectiveCamera, type WebGLRenderer } from 'three'
 
 /**
  * listen window resize to update camera and renderer
@@ -8,7 +8,7 @@ export const listenResize = (
     width: number
     height: number
   },
-  camera: PerspectiveCamera | OrthographicCamera,
+  camera: PerspectiveCamera,
   renderer: WebGLRenderer,
 ) => {
   window.addEventListener('resize', () => {
