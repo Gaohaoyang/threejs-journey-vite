@@ -53,7 +53,6 @@ const evaluator = new Evaluator()
 const windowOnRightWallCSG = evaluator.evaluate(rightWall, windowOnRightWall, SUBTRACTION)
 windowOnRightWallCSG.receiveShadow = true
 windowOnRightWallCSG.castShadow = true
-// const windowOnRightWallCSG = CSG.subtract(rightWall, windowOnRightWall)
 
 const frontWallGeometry = new RoundedBoxGeometry(40.0 + 0.8, 26.8, 0.8, 8, 0.2)
 const frontWall = new Mesh(frontWallGeometry, transparentMaterial)

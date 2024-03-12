@@ -5,18 +5,18 @@ const ambientLight = new AmbientLight('#ffffff', 0.3)
 scene.add(ambientLight)
 
 const directionalLight = new DirectionalLight('#ffffff', 1)
-directionalLight.position.set(10, 20, -30)
+directionalLight.position.set(20, 20, -30)
 
 directionalLight.castShadow = true
 directionalLight.shadow.mapSize.width = 1024
 directionalLight.shadow.mapSize.height = 1024
 
 directionalLight.shadow.camera.near = 1
-directionalLight.shadow.camera.far = 60
-directionalLight.shadow.camera.top = 33
-directionalLight.shadow.camera.right = 33
-directionalLight.shadow.camera.bottom = -33
-directionalLight.shadow.camera.left = -33
+directionalLight.shadow.camera.far = 100
+directionalLight.shadow.camera.top = 50
+directionalLight.shadow.camera.right = 50
+directionalLight.shadow.camera.bottom = -50
+directionalLight.shadow.camera.left = -50
 
 directionalLight.shadow.normalBias = 0.12
 
