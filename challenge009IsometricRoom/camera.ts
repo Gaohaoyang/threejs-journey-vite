@@ -1,6 +1,9 @@
 import { PerspectiveCamera } from 'three'
 import { sizes } from './utils'
 
+// const scale = 220
+
 // Base camera
-export const camera = new PerspectiveCamera(70, sizes.width / sizes.height, 0.1, 1000)
-camera.position.set(1.3, 3, 8)
+// const aspectRatio = sizes.width / sizes.height
+export const camera = new PerspectiveCamera(20, sizes.width / sizes.height, 0.1, 100000)
+camera.position.set(120, 60, 120)
