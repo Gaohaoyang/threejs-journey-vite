@@ -17,3 +17,4 @@ export const renderer = new WebGLRenderer({
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 renderer.autoClear = false
+renderer.shadowMap.enabled = true
