@@ -6,3 +6,5 @@ import { renderer } from './renderer'
 export const controls = new OrbitControls(camera, renderer.domElement)
 controls.enableDamping = true
 // controls.autoRotate = true
+
+controls.target.set(0, 180, 0)
