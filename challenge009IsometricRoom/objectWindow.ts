@@ -15,8 +15,8 @@ const {
 } = windowFrame
 
 const windowFrameMaterial = new MeshStandardMaterial({
-  roughness: 1,
-  metalness: 0,
+  roughness: 0.5,
+  metalness: 0.7,
   wireframe,
   color: 0x008866,
 })
@@ -37,7 +37,7 @@ const frameInner = evaluator.evaluate(windowOuterFrameBrush, windowInnerHoleBrus
 
 const horizontalSlatBrush = new Brush(
   new RoundedBoxGeometry(
-    frameWidthInner,
+    frameWidthInner + 1,
     slatWidth * 2,
     slatWidth * 2,
     floorAndWalls.roundSegments,
@@ -51,7 +51,7 @@ horizontalSlatBrush.updateMatrixWorld()
 const verticalSlatBrush = new Brush(
   new RoundedBoxGeometry(
     0.6,
-    frameHeightInner,
+    frameHeightInner + 1,
     0.6,
     floorAndWalls.roundSegments,
     floorAndWalls.roundRadius,
@@ -66,7 +66,7 @@ let crossSlatBrush = evaluator.evaluate(horizontalSlatBrush, verticalSlatBrush, 
 const leftSlatBrush = new Brush(
   new RoundedBoxGeometry(
     slatWidth,
-    13.0,
+    13.4,
     slatWidth,
     floorAndWalls.roundSegments,
     floorAndWalls.roundRadius,
@@ -81,7 +81,7 @@ crossSlatBrush = evaluator.evaluate(crossSlatBrush, leftSlatBrush, ADDITION)
 const rightSlatBrush = new Brush(
   new RoundedBoxGeometry(
     slatWidth,
-    13.0,
+    13.4,
     slatWidth,
     floorAndWalls.roundSegments,
     floorAndWalls.roundRadius,
@@ -92,6 +92,22 @@ rightSlatBrush.position.set(8.2, 4.6, 0)
 rightSlatBrush.updateMatrixWorld()
 
 crossSlatBrush = evaluator.evaluate(crossSlatBrush, rightSlatBrush, ADDITION)
+
+// const glassMaterial = new MeshStandardMaterial({
+//   roughness: 0,
+//   metalness: 1,
+//   wireframe,
+//   color: 0x000000,
+//   transparent: true,
+//   opacity: 0.2,
+// })
+// const glassBrush = new Brush(new BoxGeometry(frameWidthInner, frameHeightInner, 0.2), glassMaterial)
+// glassBrush.position.set(0, 0, 0)
+// glassBrush.castShadow = false
+// glassBrush.receiveShadow = false
+// glassBrush.updateMatrixWorld()
+
+// crossSlatBrush = evaluator.evaluate(crossSlatBrush, glassBrush, ADDITION)
 
 export const objectWindow = evaluator.evaluate(frameInner, crossSlatBrush, ADDITION)
 
