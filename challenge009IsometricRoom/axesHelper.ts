@@ -1,6 +1,8 @@
 import { AxesHelper } from 'three'
 import { scene } from './scene'
-import { ny, floorXLength, floorZLength } from './objectFloorAndWalls'
+import { floorAndWalls } from './objectConstant'
+
+const { floorXLength, floorZLength, ny } = floorAndWalls
 
 /**
  * AxesHelper
