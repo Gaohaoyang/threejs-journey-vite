@@ -1,10 +1,20 @@
-import { AmbientLight, DirectionalLight, DirectionalLightHelper, CameraHelper } from 'three'
+import {
+  AmbientLight,
+  DirectionalLight,
+  DirectionalLightHelper,
+  CameraHelper,
+  PointLight,
+  PointLightHelper,
+} from 'three'
 import { scene } from './scene'
+import { floorAndWalls } from './objectConstant'
 
+// ambientLight
 const ambientLight = new AmbientLight('#ffffff', 0.3)
 scene.add(ambientLight)
 
-const directionalLight = new DirectionalLight('#ffffff', 1)
+// directionalLight
+export const directionalLight = new DirectionalLight('#ffffff', 1)
 directionalLight.position.set(20, 20, -30)
 
 directionalLight.castShadow = true
@@ -29,3 +39,19 @@ directionalLightHelper.visible = false
 const directionalLightCameraHelper = new CameraHelper(directionalLight.shadow.camera)
 scene.add(directionalLightCameraHelper)
 directionalLightCameraHelper.visible = false
+
+// point light
+export const pointLight = new PointLight(0xffffff, 20, 40, 1)
+pointLight.position.set(floorAndWalls.wallThickness, 6, floorAndWalls.wallThickness)
+pointLight.castShadow = true
+pointLight.shadow.camera.near = 1
+pointLight.shadow.camera.far = 30
+scene.add(pointLight)
+
+const pointLightHelper = new PointLightHelper(pointLight, 10)
+scene.add(pointLightHelper)
+pointLightHelper.visible = false
+
+const pointLightCameraHelper = new CameraHelper(pointLight.shadow.camera)
+scene.add(pointLightCameraHelper)
+pointLightCameraHelper.visible = false

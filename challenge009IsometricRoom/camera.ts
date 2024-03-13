@@ -6,4 +6,4 @@ import { sizes } from './utils'
 // Base camera
 // const aspectRatio = sizes.width / sizes.height
 export const camera = new PerspectiveCamera(20, sizes.width / sizes.height, 0.1, 100000)
-camera.position.set(120, 60, 120)
+camera.position.set(120, 30, 120)

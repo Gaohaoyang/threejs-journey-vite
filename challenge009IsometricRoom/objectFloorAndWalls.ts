@@ -8,6 +8,8 @@ import { floorAndWalls, wireframe, windowFrame } from './objectConstant'
 const { floorXLength, floorZLength, wallHeight, wallThickness, roundRadius, roundSegments, ny } =
   floorAndWalls
 
+const evaluator = new Evaluator()
+
 const transparentMaterial = new MeshStandardMaterial({
   roughness: 1,
   metalness: 0,
@@ -20,9 +22,9 @@ const transparentMaterial = new MeshStandardMaterial({
  * Floor
  */
 const floorGeometry = new RoundedBoxGeometry(
-  floorXLength,
+  floorXLength + 1,
   wallThickness,
-  floorZLength,
+  floorZLength + 1,
   roundSegments,
   roundRadius,
 )
@@ -31,10 +33,11 @@ const floorMaterial = new MeshStandardMaterial({
   metalness: 0,
   wireframe,
 })
-const floor = new Mesh(floorGeometry, floorMaterial)
-floor.position.set(floorXLength / 2, -wallThickness / 2, floorZLength / 2)
-floor.receiveShadow = true
-floor.castShadow = true
+const floor = new Brush(floorGeometry, floorMaterial)
+floor.position.set(floorXLength / 2 - 1 / 2, -wallThickness / 2, floorZLength / 2 - 1 / 2)
+floor.updateMatrixWorld()
+// floor.receiveShadow = true
+// floor.castShadow = true
 
 /**
  * Walls
@@ -47,14 +50,15 @@ const wallMaterial = new MeshStandardMaterial({
 const wallNXGeometry = new RoundedBoxGeometry(
   wallThickness,
   wallHeight,
-  floorZLength,
+  floorZLength + 1,
   roundSegments,
   roundRadius,
 )
-const wallNX = new Mesh(wallNXGeometry, wallMaterial)
-wallNX.position.set(-wallThickness / 2, wallHeight / 2 - wallThickness, floorZLength / 2)
-wallNX.receiveShadow = true
-wallNX.castShadow = true
+const wallNX = new Brush(wallNXGeometry, wallMaterial)
+wallNX.position.set(-wallThickness / 2, wallHeight / 2 - wallThickness, floorZLength / 2 - 1 / 2)
+wallNX.updateMatrixWorld()
+// wallNX.receiveShadow = true
+// wallNX.castShadow = true
 
 const wallNZGeometry = new RoundedBoxGeometry(
   floorXLength + wallThickness,
@@ -84,7 +88,6 @@ windowOnWallNZ.position.set(
 )
 windowOnWallNZ.updateMatrixWorld()
 
-const evaluator = new Evaluator()
 const windowOnWallNZCSG = evaluator.evaluate(wallNZ, windowOnWallNZ, SUBTRACTION)
 windowOnWallNZCSG.updateMatrixWorld()
 const wallNZResult = evaluator.evaluate(windowOnWallNZCSG, objectWindow, ADDITION)
@@ -144,9 +147,14 @@ roof.castShadow = true
 const groupConstruction = new Group()
 groupConstruction.position.set(-floorXLength / 2, -ny, -floorZLength / 2)
 
-groupConstruction.add(floor)
-groupConstruction.add(wallNX)
-groupConstruction.add(wallNZResult)
+let threeWallsResult = evaluator.evaluate(wallNX, wallNZResult, ADDITION)
+threeWallsResult.updateMatrixWorld()
+threeWallsResult = evaluator.evaluate(threeWallsResult, floor, ADDITION)
+
+threeWallsResult.castShadow = true
+threeWallsResult.receiveShadow = true
+
+groupConstruction.add(threeWallsResult)
 groupConstruction.add(wallPZ)
 groupConstruction.add(wallPX)
 groupConstruction.add(roof)
