@@ -20,9 +20,9 @@ const transparentMaterial = new MeshStandardMaterial({
  * Floor
  */
 const floorGeometry = new RoundedBoxGeometry(
-  floorXLength,
+  floorXLength + 1,
   wallThickness,
-  floorZLength,
+  floorZLength + 1,
   roundSegments,
   roundRadius,
 )
@@ -32,7 +32,7 @@ const floorMaterial = new MeshStandardMaterial({
   wireframe,
 })
 const floor = new Mesh(floorGeometry, floorMaterial)
-floor.position.set(floorXLength / 2, -wallThickness / 2, floorZLength / 2)
+floor.position.set(floorXLength / 2 - 1 / 2, -wallThickness / 2, floorZLength / 2 - 1 / 2)
 floor.receiveShadow = true
 floor.castShadow = true
 
@@ -47,12 +47,12 @@ const wallMaterial = new MeshStandardMaterial({
 const wallNXGeometry = new RoundedBoxGeometry(
   wallThickness,
   wallHeight,
-  floorZLength,
+  floorZLength + 1,
   roundSegments,
   roundRadius,
 )
 const wallNX = new Mesh(wallNXGeometry, wallMaterial)
-wallNX.position.set(-wallThickness / 2, wallHeight / 2 - wallThickness, floorZLength / 2)
+wallNX.position.set(-wallThickness / 2, wallHeight / 2 - wallThickness, floorZLength / 2 - 1 / 2)
 wallNX.receiveShadow = true
 wallNX.castShadow = true
 
