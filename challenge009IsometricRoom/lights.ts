@@ -28,7 +28,7 @@ directionalLight.shadow.camera.right = 50
 directionalLight.shadow.camera.bottom = -50
 directionalLight.shadow.camera.left = -50
 
-directionalLight.shadow.normalBias = 0.12
+directionalLight.shadow.normalBias = 0.4
 
 scene.add(directionalLight)
 
