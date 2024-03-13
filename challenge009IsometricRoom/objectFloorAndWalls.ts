@@ -1,16 +1,12 @@
-import { Mesh, MeshStandardMaterial, Group, BoxHelper } from 'three'
+import { Mesh, MeshStandardMaterial, Group, BoxHelper, BoxGeometry } from 'three'
 import { scene } from './scene'
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js'
-import { SUBTRACTION, Brush, Evaluator } from 'three-bvh-csg'
+import { SUBTRACTION, ADDITION, Brush, Evaluator } from 'three-bvh-csg'
+import { objectWindow } from './objectWindow'
+import { floorAndWalls, wireframe, windowFrame } from './objectConstant'
 
-export const floorXLength = 40.0
-export const floorZLength = 30.0
-const wallHeight = 26.8
-const wallThickness = 0.8
-const roundRadius = 0.2
-const roundSegments = 8
-export const ny = 18
-const wireframe = false
+const { floorXLength, floorZLength, wallHeight, wallThickness, roundRadius, roundSegments, ny } =
+  floorAndWalls
 
 const transparentMaterial = new MeshStandardMaterial({
   roughness: 1,
@@ -75,21 +71,26 @@ wallNZ.position.set(
 )
 wallNZ.updateMatrixWorld()
 
-const windowOnWallNZGeometry = new RoundedBoxGeometry(
-  20,
-  18,
+const windowOnWallNZGeometry = new BoxGeometry(
+  windowFrame.frameWidthOuter,
+  windowFrame.frameHeightOuter,
   wallThickness,
-  roundSegments,
-  roundRadius,
 )
 const windowOnWallNZ = new Brush(windowOnWallNZGeometry, wallMaterial)
-windowOnWallNZ.position.set(20, 12, -wallThickness / 2)
+windowOnWallNZ.position.set(
+  windowFrame.frameWidthOuter / 2 + windowFrame.x,
+  windowFrame.frameHeightOuter / 2 + windowFrame.y,
+  -wallThickness / 2,
+)
 windowOnWallNZ.updateMatrixWorld()
 
 const evaluator = new Evaluator()
 const windowOnWallNZCSG = evaluator.evaluate(wallNZ, windowOnWallNZ, SUBTRACTION)
-windowOnWallNZCSG.receiveShadow = true
-windowOnWallNZCSG.castShadow = true
+windowOnWallNZCSG.updateMatrixWorld()
+const wallNZResult = evaluator.evaluate(windowOnWallNZCSG, objectWindow, ADDITION)
+wallNZResult.receiveShadow = true
+wallNZResult.castShadow = true
+wallNZResult.updateMatrixWorld()
 
 const wallPZGeometry = new RoundedBoxGeometry(
   floorXLength + wallThickness + wallThickness,
@@ -145,11 +146,13 @@ groupConstruction.position.set(-floorXLength / 2, -ny, -floorZLength / 2)
 
 groupConstruction.add(floor)
 groupConstruction.add(wallNX)
-groupConstruction.add(windowOnWallNZCSG)
+groupConstruction.add(wallNZResult)
 groupConstruction.add(wallPZ)
 groupConstruction.add(wallPX)
 groupConstruction.add(roof)
 scene.add(groupConstruction)
 
+// groupConstructionBoxHelper
 export const groupConstructionBoxHelper = new BoxHelper(groupConstruction)
+groupConstructionBoxHelper.visible = false
 scene.add(groupConstructionBoxHelper)
