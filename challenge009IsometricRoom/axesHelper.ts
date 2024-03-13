@@ -9,6 +9,6 @@ const { floorXLength, floorZLength, ny } = floorAndWalls
  */
 const axesHelper = new AxesHelper(42)
 axesHelper.position.set(-floorXLength / 2, -ny, -floorZLength / 2)
-// axesHelper.visible = false
+axesHelper.visible = false
 
 scene.add(axesHelper)
