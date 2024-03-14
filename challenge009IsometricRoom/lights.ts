@@ -10,7 +10,7 @@ import { scene } from './scene'
 import { floorAndWalls } from './objectConstant'
 
 // ambientLight
-const ambientLight = new AmbientLight('#ffffff', 0.3)
+export const ambientLight = new AmbientLight('#ffffff', 0.2)
 scene.add(ambientLight)
 
 // directionalLight
@@ -46,6 +46,9 @@ pointLight.position.set(floorAndWalls.wallThickness, 6, floorAndWalls.wallThickn
 pointLight.castShadow = true
 pointLight.shadow.camera.near = 1
 pointLight.shadow.camera.far = 30
+
+pointLight.shadow.normalBias = 0.7
+
 scene.add(pointLight)
 
 const pointLightHelper = new PointLightHelper(pointLight, 10)
