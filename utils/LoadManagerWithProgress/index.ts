@@ -19,12 +19,12 @@ export const startLoading = (param: StartLoading) => {
   } = createProgressBar(loadingElementWrap, title)
   const manager = new LoadingManager()
   manager.onStart = (url, itemsLoaded, itemsTotal) => {
-    console.log(`Started loading file: ${url}.\nLoaded ${itemsLoaded} of ${itemsTotal} files.`)
+    // console.log(`Started loading file: ${url}.\nLoaded ${itemsLoaded} of ${itemsTotal} files.`)
     divTitleEle.textContent = `${title} loading ...`
     startLoadItem(title)
   }
   manager.onProgress = (url, itemsLoaded, itemsTotal) => {
-    console.log(`Loading file: ${url}.\nLoaded ${itemsLoaded} of ${itemsTotal} files.`)
+    // console.log(`Loading file: ${url}.\nLoaded ${itemsLoaded} of ${itemsTotal} files.`)
     progressBarInnerEle.style.transform = `translateX(${(itemsLoaded / itemsTotal) * 100}%)`
     divTitlePercentage.textContent = `${((itemsLoaded / itemsTotal) * 100).toFixed(2)}%`
   }
@@ -34,8 +34,8 @@ export const startLoading = (param: StartLoading) => {
   }
   manager.onLoad = () => {
     onLoad && onLoad()
-    console.log('Loading complete!')
-    console.log('success')
+    // console.log('Loading complete!')
+    // console.log('success')
     divTitleEle.textContent = `${title} loading completed!`
     loadedLoadItem(title)
     if (isAllLoaded()) {
