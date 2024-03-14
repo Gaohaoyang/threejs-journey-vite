@@ -37,13 +37,19 @@ loader.load('https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/models/sofa/ikeaSofa.ob
   })
 
   const sofaTextureLoader = new TextureLoader(sofaTextureLoadManager)
-  const sofaColorTexture = sofaTextureLoader.load('https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/models/sofa/Fabric030_1K-JPG_Color.jpg')
+  const sofaColorTexture = sofaTextureLoader.load('https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/texture/fabric/Fabric030_1K-JPG_Color.jpg')
   sofaColorTexture.colorSpace = SRGBColorSpace
   sofaColorTexture.wrapS = RepeatWrapping
   sofaColorTexture.wrapT = RepeatWrapping
-  const sofaNormalTexture = sofaTextureLoader.load('https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/models/sofa/Fabric030_1K-JPG_NormalGL.jpg')
-  const sofaAmbientOcclusionTexture = sofaTextureLoader.load('https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/models/sofa/Fabric030_1K-JPG_AmbientOcclusion.jpg')
-  const sofaRoughnessTexture = sofaTextureLoader.load('https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/models/sofa/Fabric030_1K-JPG_Roughness.jpg')
+  const sofaNormalTexture = sofaTextureLoader.load('https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/texture/fabric/Fabric030_1K-JPG_NormalGL.jpg')
+  sofaNormalTexture.wrapS = RepeatWrapping
+  sofaNormalTexture.wrapT = RepeatWrapping
+  const sofaAmbientOcclusionTexture = sofaTextureLoader.load('https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/texture/fabric/Fabric030_1K-JPG_AmbientOcclusion.jpg')
+  sofaAmbientOcclusionTexture.wrapS = RepeatWrapping
+  sofaAmbientOcclusionTexture.wrapT = RepeatWrapping
+  const sofaRoughnessTexture = sofaTextureLoader.load('https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/texture/fabric/Fabric030_1K-JPG_Roughness.jpg')
+  sofaRoughnessTexture.wrapS = RepeatWrapping
+  sofaRoughnessTexture.wrapT = RepeatWrapping
 })
 
 const addShadow = (object: Mesh) => {
