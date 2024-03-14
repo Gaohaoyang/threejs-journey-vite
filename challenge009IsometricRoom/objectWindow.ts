@@ -41,7 +41,7 @@ const horizontalSlatBrush = new Brush(
     slatWidth * 2,
     slatWidth * 2,
     floorAndWalls.roundSegments,
-    floorAndWalls.roundRadius,
+    floorAndWalls.roundRadius / 2,
   ),
   windowFrameMaterial,
 )
@@ -54,7 +54,7 @@ const verticalSlatBrush = new Brush(
     frameHeightInner + 1,
     0.6,
     floorAndWalls.roundSegments,
-    floorAndWalls.roundRadius,
+    floorAndWalls.roundRadius / 2,
   ),
   windowFrameMaterial,
 )
@@ -69,7 +69,7 @@ const leftSlatBrush = new Brush(
     13.4,
     slatWidth,
     floorAndWalls.roundSegments,
-    floorAndWalls.roundRadius,
+    floorAndWalls.roundRadius / 2,
   ),
   windowFrameMaterial,
 )
@@ -84,7 +84,7 @@ const rightSlatBrush = new Brush(
     13.4,
     slatWidth,
     floorAndWalls.roundSegments,
-    floorAndWalls.roundRadius,
+    floorAndWalls.roundRadius / 2,
   ),
   windowFrameMaterial,
 )
