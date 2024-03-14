@@ -11,7 +11,7 @@ group.position.set(-floorXLength / 2, -ny, -floorZLength / 2)
 const sofaLoadManager = startLoading({ title: 'Sofa' })
 
 const loader = new OBJLoader(sofaLoadManager)
-loader.load('./models/ikeaSofa.obj', (obj) => {
+loader.load('https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/models/sofa/ikeaSofa.obj', (obj) => {
   const scale = 10
   obj.scale.set(scale, scale, scale)
   obj.rotation.y = -Math.PI / 2
