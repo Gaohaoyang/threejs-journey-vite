@@ -128,3 +128,17 @@ spotLightHelper4.visible = false
 const spotLightCameraHelper4 = new CameraHelper(spotLight4.shadow.camera)
 scene.add(spotLightCameraHelper4)
 spotLightCameraHelper4.visible = false
+
+const spotLights = [spotLight, spotLight2, spotLight3, spotLight4]
+
+export const turnOffSpotLights = () => {
+  spotLights.forEach((spotLight) => {
+    spotLight.visible = false
+  })
+}
+
+export const turnOnSpotLights = () => {
+  spotLights.forEach((spotLight) => {
+    spotLight.visible = true
+  })
+}
