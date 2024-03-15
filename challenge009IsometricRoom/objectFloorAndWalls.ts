@@ -1,14 +1,50 @@
-import { Mesh, MeshStandardMaterial, Group, BoxHelper, BoxGeometry } from 'three'
+import {
+  Mesh,
+  MeshStandardMaterial,
+  Group,
+  BoxHelper,
+  BoxGeometry,
+  TextureLoader,
+  RepeatWrapping,
+} from 'three'
 import { scene } from './scene'
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js'
 import { SUBTRACTION, ADDITION, Brush, Evaluator } from 'three-bvh-csg'
 import { objectWindow } from './objectWindow'
 import { floorAndWalls, wireframe, windowFrame } from './objectConstant'
+import { startLoading } from '../utils/LoadManagerWithProgress'
 
 const { floorXLength, floorZLength, wallHeight, wallThickness, roundRadius, roundSegments, ny } =
   floorAndWalls
 
 const evaluator = new Evaluator()
+
+// wall texture
+const windowTextureLoadManager = startLoading({ title: 'Wall texture' })
+const wallColorTexture = new TextureLoader(windowTextureLoadManager).load(
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/texture/wall/fiber-textured-wall1_albedo.png',
+)
+const wallNormalTexture = new TextureLoader(windowTextureLoadManager).load(
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/texture/wall/fiber-textured-wall1_normal-ogl.png',
+)
+const wallAmbientOcclusionTexture = new TextureLoader(windowTextureLoadManager).load(
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/texture/wall/fiber-textured-wall1_ao.png',
+)
+wallColorTexture.repeat.set(2, 2)
+wallNormalTexture.repeat.set(2, 2)
+wallAmbientOcclusionTexture.repeat.set(2, 2)
+wallColorTexture.wrapS = wallColorTexture.wrapT = RepeatWrapping
+wallNormalTexture.wrapS = wallNormalTexture.wrapT = RepeatWrapping
+wallAmbientOcclusionTexture.wrapS = wallAmbientOcclusionTexture.wrapT = RepeatWrapping
+
+const wallMaterial = new MeshStandardMaterial({
+  roughness: 1,
+  metalness: 0,
+  wireframe,
+})
+wallMaterial.map = wallColorTexture
+wallMaterial.normalMap = wallNormalTexture
+wallMaterial.aoMap = wallAmbientOcclusionTexture
 
 const transparentMaterial = new MeshStandardMaterial({
   roughness: 1,
@@ -42,11 +78,7 @@ floor.updateMatrixWorld()
 /**
  * Walls
  */
-const wallMaterial = new MeshStandardMaterial({
-  roughness: 1,
-  metalness: 0,
-  wireframe,
-})
+
 const wallNXGeometry = new RoundedBoxGeometry(
   wallThickness,
   wallHeight,
