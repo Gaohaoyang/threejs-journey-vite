@@ -124,7 +124,7 @@ const floorBrickMaterial = new MeshStandardMaterial({
   map: floorBrickColorTexture,
   normalMap: floorBrickNormalTexture,
   displacementMap: floorBrickDisplacementTexture,
-  displacementScale: 0.01,
+  displacementScale: 0.001,
   roughnessMap: floorBrickRoughnessTexture,
   // color: 0x000000,
 })
