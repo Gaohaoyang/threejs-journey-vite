@@ -5,7 +5,7 @@ import { sizes } from './utils'
 
 // Base camera
 // const aspectRatio = sizes.width / sizes.height
-export const camera = new PerspectiveCamera(20, sizes.width / sizes.height, 0.1, 100000)
+export const camera = new PerspectiveCamera(20, sizes.width / sizes.height, 25, 600)
 
 // if on mobile
 if (sizes.width < 768) {
