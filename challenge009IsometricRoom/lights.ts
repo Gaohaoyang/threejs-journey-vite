@@ -43,8 +43,8 @@ scene.add(directionalLightCameraHelper)
 directionalLightCameraHelper.visible = false
 
 // point light
-export const pointLight = new PointLight(0xffffff, 20, 40, 1)
-pointLight.position.set(floorAndWalls.wallThickness, 6, floorAndWalls.wallThickness)
+export const pointLight = new PointLight(0xffffff, 30, 40, 1)
+pointLight.position.set(floorAndWalls.wallThickness, 2, floorAndWalls.wallThickness)
 pointLight.castShadow = true
 pointLight.shadow.camera.near = 1
 pointLight.shadow.camera.far = 30
@@ -128,3 +128,17 @@ spotLightHelper4.visible = false
 const spotLightCameraHelper4 = new CameraHelper(spotLight4.shadow.camera)
 scene.add(spotLightCameraHelper4)
 spotLightCameraHelper4.visible = false
+
+const spotLights = [spotLight, spotLight2, spotLight3, spotLight4]
+
+export const turnOffSpotLights = () => {
+  spotLights.forEach((spotLight) => {
+    spotLight.visible = false
+  })
+}
+
+export const turnOnSpotLights = () => {
+  spotLights.forEach((spotLight) => {
+    spotLight.visible = true
+  })
+}

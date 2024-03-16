@@ -1,14 +1,51 @@
-import { Mesh, MeshStandardMaterial, Group, BoxHelper, BoxGeometry } from 'three'
+import {
+  Mesh,
+  MeshStandardMaterial,
+  Group,
+  BoxHelper,
+  BoxGeometry,
+  TextureLoader,
+  RepeatWrapping,
+} from 'three'
 import { scene } from './scene'
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js'
 import { SUBTRACTION, ADDITION, Brush, Evaluator } from 'three-bvh-csg'
 import { objectWindow } from './objectWindow'
 import { floorAndWalls, wireframe, windowFrame } from './objectConstant'
+import { startLoading } from '../utils/LoadManagerWithProgress'
 
 const { floorXLength, floorZLength, wallHeight, wallThickness, roundRadius, roundSegments, ny } =
   floorAndWalls
 
 const evaluator = new Evaluator()
+
+// wall texture
+const windowTextureLoadManager = startLoading({ title: 'Wall texture' })
+const wallTextureLoader = new TextureLoader(windowTextureLoadManager)
+const wallColorTexture = wallTextureLoader.load(
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/texture/wall/fiber-textured-wall1_albedo.png',
+)
+const wallNormalTexture = wallTextureLoader.load(
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/texture/wall/fiber-textured-wall1_normal-ogl.png',
+)
+const wallAmbientOcclusionTexture = wallTextureLoader.load(
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/texture/wall/fiber-textured-wall1_ao.png',
+)
+wallColorTexture.repeat.set(2, 2)
+wallNormalTexture.repeat.set(2, 2)
+wallAmbientOcclusionTexture.repeat.set(2, 2)
+wallColorTexture.wrapS = wallColorTexture.wrapT = RepeatWrapping
+wallNormalTexture.wrapS = wallNormalTexture.wrapT = RepeatWrapping
+wallAmbientOcclusionTexture.wrapS = wallAmbientOcclusionTexture.wrapT = RepeatWrapping
+
+const wallMaterial = new MeshStandardMaterial({
+  roughness: 1,
+  metalness: 0,
+  wireframe,
+})
+wallMaterial.map = wallColorTexture
+wallMaterial.normalMap = wallNormalTexture
+wallMaterial.aoMap = wallAmbientOcclusionTexture
 
 const transparentMaterial = new MeshStandardMaterial({
   roughness: 1,
@@ -28,25 +65,78 @@ const floorGeometry = new RoundedBoxGeometry(
   roundSegments,
   roundRadius,
 )
+
+// floor texture
+const floorTextureLoadManager = startLoading({ title: 'Floor texture' })
+const floorTextureLoader = new TextureLoader(floorTextureLoadManager)
+
 const floorMaterial = new MeshStandardMaterial({
   roughness: 1,
   metalness: 0,
   wireframe,
 })
-const floor = new Brush(floorGeometry, floorMaterial)
+let floor = new Brush(floorGeometry, floorMaterial)
 floor.position.set(floorXLength / 2 - 1 / 2, -wallThickness / 2, floorZLength / 2 - 1 / 2)
 floor.updateMatrixWorld()
-// floor.receiveShadow = true
-// floor.castShadow = true
+
+// floor brick
+
+const floorBrickGeometry = new RoundedBoxGeometry(
+  floorXLength + 1,
+  0.4,
+  floorZLength + 1,
+  roundSegments,
+  roundRadius,
+)
+const floorBrickColorTexture = floorTextureLoader.load('https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/texture/floor/Proma-XL-Mist-001-DIFFUSE-1K.png')
+const floorBrickNormalTexture = floorTextureLoader.load(
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/texture/floor/Proma-XL-Mist-001-NORMALS16_OPENGL-1K.png',
+)
+const floorBrickDisplacementTexture = floorTextureLoader.load(
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/texture/floor/Proma-XL-Mist-001-DISPLACEMENT16-1K.png',
+)
+const floorBrickRoughnessTexture = floorTextureLoader.load(
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/texture/floor/Proma-XL-Mist-001-ROUGHNESS-1K.png',
+)
+floorBrickColorTexture.wrapS =
+  floorBrickColorTexture.wrapT =
+  floorBrickNormalTexture.wrapS =
+  floorBrickNormalTexture.wrapT =
+  floorBrickDisplacementTexture.wrapS =
+  floorBrickDisplacementTexture.wrapT =
+  floorBrickRoughnessTexture.wrapS =
+  floorBrickRoughnessTexture.wrapT =
+    RepeatWrapping
+floorBrickColorTexture.rotation =
+  floorBrickNormalTexture.rotation =
+  floorBrickDisplacementTexture.rotation =
+  floorBrickRoughnessTexture.rotation =
+    Math.PI / 2
+floorBrickColorTexture.repeat.set(1.3, 1.3)
+floorBrickNormalTexture.repeat.set(1.3, 1.3)
+floorBrickDisplacementTexture.repeat.set(1.3, 1.3)
+floorBrickRoughnessTexture.repeat.set(1.3, 1.3)
+
+const floorBrickMaterial = new MeshStandardMaterial({
+  // roughness: 1,
+  // metalness: 0,
+  wireframe,
+  map: floorBrickColorTexture,
+  normalMap: floorBrickNormalTexture,
+  displacementMap: floorBrickDisplacementTexture,
+  displacementScale: 0.01,
+  roughnessMap: floorBrickRoughnessTexture,
+  // color: 0x000000,
+})
+const floorBrick = new Brush(floorBrickGeometry, floorBrickMaterial)
+floorBrick.position.set(floorXLength / 2 - 1 / 2, -0.199, floorZLength / 2 - 1 / 2)
+floorBrick.updateMatrixWorld()
+
+floor = evaluator.evaluate(floorBrick, floor, ADDITION)
 
 /**
  * Walls
  */
-const wallMaterial = new MeshStandardMaterial({
-  roughness: 1,
-  metalness: 0,
-  wireframe,
-})
 const wallNXGeometry = new RoundedBoxGeometry(
   wallThickness,
   wallHeight,

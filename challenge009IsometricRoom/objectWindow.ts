@@ -1,7 +1,14 @@
-import { MeshStandardMaterial, BoxGeometry } from 'three'
+import {
+  MeshStandardMaterial,
+  BoxGeometry,
+  TextureLoader,
+  SRGBColorSpace,
+  RepeatWrapping,
+} from 'three'
 import { SUBTRACTION, Brush, Evaluator, ADDITION } from 'three-bvh-csg'
 import { windowFrame, wireframe, floorAndWalls } from './objectConstant'
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js'
+import { startLoading } from '../utils/LoadManagerWithProgress'
 
 const {
   frameThickness,
@@ -15,10 +22,12 @@ const {
 } = windowFrame
 
 const windowFrameMaterial = new MeshStandardMaterial({
-  roughness: 0.5,
-  metalness: 0.7,
+  roughness: 0.1,
+  metalness: 0.6,
   wireframe,
-  color: 0x008866,
+  color: 0xffffff,
+  // transparent: true,
+  // opacity: 0.6,
 })
 
 const windowOuterFrameBrush = new Brush(
@@ -117,3 +126,49 @@ objectWindow.position.set(
   -(floorAndWalls.wallThickness - frameThickness / 2),
 )
 objectWindow.updateMatrixWorld()
+
+// texture
+const windowTextureLoadManager = startLoading({ title: 'Window texture' })
+
+const windowTextureLoader = new TextureLoader(windowTextureLoadManager)
+
+const windowColorTexture = windowTextureLoader.load(
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/texture/metal/worn-shiny-metal-albedo.png',
+)
+windowColorTexture.colorSpace = SRGBColorSpace
+const windowNormalTexture = windowTextureLoader.load(
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/texture/metal/worn-shiny-metal-Normal-dx.png',
+)
+const windowAmbientOcclusionTexture = windowTextureLoader.load(
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/texture/metal/worn-shiny-metal-ao.png',
+)
+const windowRoughnessTexture = windowTextureLoader.load(
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/texture/metal/worn-shiny-metal-Roughness.png',
+)
+const windowMetalnessTexture = windowTextureLoader.load(
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/texture/metal/worn-shiny-metal-Metallic.png',
+)
+const displacementMap = windowTextureLoader.load(
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/texture/metal/worn-shiny-metal-Height.png',
+)
+
+windowColorTexture.wrapS = RepeatWrapping
+windowColorTexture.wrapT = RepeatWrapping
+windowNormalTexture.wrapS = RepeatWrapping
+windowNormalTexture.wrapT = RepeatWrapping
+windowAmbientOcclusionTexture.wrapS = RepeatWrapping
+windowAmbientOcclusionTexture.wrapT = RepeatWrapping
+windowRoughnessTexture.wrapS = RepeatWrapping
+windowRoughnessTexture.wrapT = RepeatWrapping
+windowMetalnessTexture.wrapS = RepeatWrapping
+windowMetalnessTexture.wrapT = RepeatWrapping
+displacementMap.wrapS = RepeatWrapping
+displacementMap.wrapT = RepeatWrapping
+
+// windowFrameMaterial.map = windowColorTexture
+windowFrameMaterial.normalMap = windowNormalTexture
+windowFrameMaterial.aoMap = windowAmbientOcclusionTexture
+windowFrameMaterial.roughnessMap = windowRoughnessTexture
+windowFrameMaterial.metalnessMap = windowMetalnessTexture
+windowFrameMaterial.displacementMap = displacementMap
+windowFrameMaterial.displacementScale = 0.01

@@ -10,6 +10,7 @@ import './axesHelper'
 // import './objectTorusKnot'
 import './objectFloorAndWalls'
 import './objectSofa'
+import './objectRug'
 
 tick()
 

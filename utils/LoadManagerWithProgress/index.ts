@@ -63,13 +63,13 @@ const createProgressBar = (wrap: HTMLDivElement, title: string) => {
   divTitleAreaEle.className = 'progress-bar-title'
   wrap.appendChild(divTitleAreaEle)
 
+  const divTitlePercentage = document.createElement('div')
+  divTitlePercentage.textContent = '0%'
+
+  divTitleAreaEle.appendChild(divTitlePercentage)
   const divTitleEle = document.createElement('div')
   divTitleEle.textContent = title
   divTitleAreaEle.appendChild(divTitleEle)
-
-  const divTitlePercentage = document.createElement('div')
-  divTitlePercentage.textContent = '0%'
-  divTitleAreaEle.appendChild(divTitlePercentage)
 
   const divWrap = document.createElement('div')
   divWrap.className = 'progress-bar'
