@@ -37,6 +37,7 @@ loader.load('https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/models/sofa/ikeaSofa.ob
         normalMap: sofaNormalTexture,
         aoMap: sofaAmbientOcclusionTexture,
         roughnessMap: sofaRoughnessTexture,
+        wireframe,
       })
       sofaMesh.material = sofaMaterial
 
@@ -45,6 +46,7 @@ loader.load('https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/models/sofa/ikeaSofa.ob
         normalMap: pillowNormalTexture,
         aoMap: pillowAmbientOcclusionTexture,
         color: 0x4db6ac,
+        wireframe,
       })
       pillowsMesh.material = pillowsMaterial
 
@@ -100,7 +102,6 @@ loader.load('https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/models/sofa/ikeaSofa.ob
 const addShadow = (object: Mesh) => {
   object.castShadow = true
   object.receiveShadow = true
-  ;(object.material as MeshStandardMaterial).wireframe = wireframe
 }
 
 scene.add(group)
