@@ -20,11 +20,12 @@ export const directionalLight = new DirectionalLight('#ffffff', 2)
 directionalLight.position.set(20, 20, -30)
 
 directionalLight.castShadow = true
-directionalLight.shadow.mapSize.width = 1024
-directionalLight.shadow.mapSize.height = 1024
+directionalLight.shadow.mapSize.width = 256
+directionalLight.shadow.mapSize.height = 256
+// directionalLight.shadow.radius = 1
 
 directionalLight.shadow.camera.near = 1
-directionalLight.shadow.camera.far = 100
+directionalLight.shadow.camera.far = 200
 directionalLight.shadow.camera.top = 50
 directionalLight.shadow.camera.right = 50
 directionalLight.shadow.camera.bottom = -50

@@ -88,7 +88,9 @@ const floorBrickGeometry = new RoundedBoxGeometry(
   roundSegments,
   roundRadius,
 )
-const floorBrickColorTexture = floorTextureLoader.load('https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/texture/floor/Proma-XL-Mist-001-DIFFUSE-1K.png')
+const floorBrickColorTexture = floorTextureLoader.load(
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/texture/floor/Proma-XL-Mist-001-DIFFUSE-1K.png',
+)
 const floorBrickNormalTexture = floorTextureLoader.load(
   'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/texture/floor/Proma-XL-Mist-001-NORMALS16_OPENGL-1K.png',
 )
@@ -186,23 +188,23 @@ wallNZResult.castShadow = true
 wallNZResult.updateMatrixWorld()
 
 const wallPZGeometry = new RoundedBoxGeometry(
-  floorXLength + wallThickness + wallThickness,
+  floorXLength + wallThickness + 0.1,
   wallHeight,
-  wallThickness,
+  0.1,
   roundSegments,
   roundRadius,
 )
 const wallPZ = new Mesh(wallPZGeometry, transparentMaterial)
 wallPZ.position.set(
-  floorXLength / 2,
+  floorXLength / 2 - wallThickness / 2,
   wallHeight / 2 - wallThickness,
-  floorZLength + wallThickness / 2,
+  floorZLength + 0.1 / 2,
 )
 wallPZ.receiveShadow = true
 wallPZ.castShadow = true
 
 const wallPXGeometry = new RoundedBoxGeometry(
-  wallThickness,
+  0.1,
   wallHeight,
   floorZLength + wallThickness,
   roundSegments,
@@ -210,7 +212,7 @@ const wallPXGeometry = new RoundedBoxGeometry(
 )
 const wallPX = new Mesh(wallPXGeometry, transparentMaterial)
 wallPX.position.set(
-  floorXLength + wallThickness / 2,
+  floorXLength + 0.1 / 2,
   wallHeight / 2 - wallThickness,
   floorZLength / 2 - wallThickness / 2,
 )
@@ -221,15 +223,19 @@ wallPX.castShadow = true
  * Roof
  */
 const roofGeometry = new RoundedBoxGeometry(
-  floorXLength + wallThickness + wallThickness,
+  floorXLength + wallThickness + 0.1,
   wallThickness,
-  floorZLength + wallThickness + wallThickness,
+  floorZLength + wallThickness + 0.1,
   roundSegments,
   roundRadius,
 )
 
 const roof = new Mesh(roofGeometry, transparentMaterial)
-roof.position.set(floorXLength / 2, wallHeight - wallThickness / 2, floorZLength / 2)
+roof.position.set(
+  floorXLength / 2 - wallThickness / 2,
+  wallHeight - wallThickness / 2,
+  floorZLength / 2 - wallThickness / 2,
+)
 roof.receiveShadow = true
 roof.castShadow = true
 

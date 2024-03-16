@@ -11,6 +11,7 @@ import './axesHelper'
 import './objectFloorAndWalls'
 import './objectSofa'
 import './objectRug'
+import './objectGround'
 
 tick()
 
