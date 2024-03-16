@@ -48,7 +48,7 @@ const rugMaterial = new MeshStandardMaterial({
   wireframe,
   map: rugColorTexture,
   displacementMap: rugDisplacementTexture,
-  displacementScale: 0.05,
+  displacementScale: 0.005,
   normalMap: rugNormalTexture,
   aoMap: rugAmbientOcclusionTexture,
   roughnessMap: rugRoughnessTexture,
@@ -57,7 +57,7 @@ const rugMaterial = new MeshStandardMaterial({
 rugMaterial.normalScale.set(1.2, 1.2)
 
 const rug = new Mesh(rugGeometry, rugMaterial)
-rug.position.set(28, 0, 15)
+rug.position.set(28, 0.01, 15)
 rug.receiveShadow = true
 rug.castShadow = true
 
