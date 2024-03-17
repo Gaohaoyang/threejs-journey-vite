@@ -198,7 +198,8 @@ const wallPZ = new Mesh(wallPZGeometry, transparentMaterial)
 wallPZ.position.set(
   floorXLength / 2 - wallThickness / 2,
   wallHeight / 2 - wallThickness,
-  floorZLength + 0.1 / 2,
+  // floorZLength + 0.1 / 2,
+  floorZLength - 0.19,
 )
 wallPZ.receiveShadow = true
 wallPZ.castShadow = true
