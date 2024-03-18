@@ -49,9 +49,8 @@ pointLight.position.set(floorAndWalls.wallThickness, 2, floorAndWalls.wallThickn
 pointLight.castShadow = true
 pointLight.shadow.camera.near = 1
 pointLight.shadow.camera.far = 30
-
 pointLight.shadow.normalBias = 0.7
-
+pointLight.shadow.radius = 5
 scene.add(pointLight)
 
 const pointLightHelper = new PointLightHelper(pointLight, 10)

@@ -12,6 +12,7 @@ import './objectFloorAndWalls'
 import './objectSofa'
 import './objectRug'
 // import './objectGround'
+import './objectShelf'
 
 tick()
 
