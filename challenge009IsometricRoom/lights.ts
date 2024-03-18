@@ -22,9 +22,10 @@ directionalLight.position.set(20, 20, -30)
 directionalLight.castShadow = true
 directionalLight.shadow.mapSize.width = 1024
 directionalLight.shadow.mapSize.height = 1024
+// directionalLight.shadow.radius = 2
 
 directionalLight.shadow.camera.near = 1
-directionalLight.shadow.camera.far = 100
+directionalLight.shadow.camera.far = 200
 directionalLight.shadow.camera.top = 50
 directionalLight.shadow.camera.right = 50
 directionalLight.shadow.camera.bottom = -50
@@ -48,9 +49,8 @@ pointLight.position.set(floorAndWalls.wallThickness, 2, floorAndWalls.wallThickn
 pointLight.castShadow = true
 pointLight.shadow.camera.near = 1
 pointLight.shadow.camera.far = 30
-
 pointLight.shadow.normalBias = 0.7
-
+pointLight.shadow.radius = 5
 scene.add(pointLight)
 
 const pointLightHelper = new PointLightHelper(pointLight, 10)
