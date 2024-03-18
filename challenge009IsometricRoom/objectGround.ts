@@ -1,11 +1,13 @@
 import {
   Mesh,
   Group,
-  TextureLoader,
-  SRGBColorSpace,
+  // TextureLoader,
+  // SRGBColorSpace,
   MeshStandardMaterial,
-  RepeatWrapping,
+  // RepeatWrapping,
   PlaneGeometry,
+  // SphereGeometry,
+  DoubleSide,
 } from 'three'
 import { floorAndWalls, wireframe } from './objectConstant'
 import { scene } from './scene'
@@ -22,11 +24,19 @@ const groundMaterial = new MeshStandardMaterial({
   roughness: 1,
   metalness: 0,
   wireframe,
+  side: DoubleSide,
 })
 const ground = new Mesh(groundGeometry, groundMaterial)
 ground.rotation.x = -Math.PI / 2
 ground.position.set(0, -floorAndWalls.wallThickness - 0.01, 0)
 ground.receiveShadow = true
+
+// const skySphereGeometry = new SphereGeometry(200, 32, 32, 0, Math.PI * 2, 0, Math.PI / 2)
+// const skySphere = new Mesh(skySphereGeometry, groundMaterial)
+// skySphere.position.set(0, 0, 0)
+// skySphere.receiveShadow = false
+
+// group.add(skySphere)
 
 group.add(ground)
 scene.add(group)
