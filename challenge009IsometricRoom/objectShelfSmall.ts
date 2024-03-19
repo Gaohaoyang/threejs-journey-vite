@@ -1,8 +1,8 @@
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js'
-import { MeshStandardMaterial, Group, Mesh } from 'three'
+import { Group, Mesh } from 'three'
 import { scene } from './scene'
-import { floorAndWalls, wireframe } from './objectConstant'
-import { shelfMeasurements } from './objectShelf'
+import { floorAndWalls } from './objectConstant'
+import { shelfMeasurements, shelfMaterial } from './objectShelf'
 
 const {
   shelfWidth: bigShelfWidth,
@@ -23,13 +23,6 @@ group.position.set(
   -ny + shelfBorderBoardThickness / 2 + 0.1,
   -floorZLength / 2 + shelfWidth / 2 + 2 + bigShelfWidth,
 )
-
-const shelfMaterial = new MeshStandardMaterial({
-  roughness: 0.9,
-  metalness: 0.4,
-  color: 0xffffff,
-  wireframe,
-})
 
 const boardH1 = new Mesh(
   new RoundedBoxGeometry(
