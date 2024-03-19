@@ -6,6 +6,7 @@ import { renderer } from './renderer'
 export const controls = new OrbitControls(camera, renderer.domElement)
 controls.enableDamping = true
 // controls.autoRotate = true
+// controls.minDistance = 3
 controls.minDistance = 30
 controls.maxDistance = 400
 controls.maxPolarAngle = Math.PI / 1.98

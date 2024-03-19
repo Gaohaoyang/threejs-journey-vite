@@ -14,6 +14,7 @@ import './objectRug'
 // import './objectGround'
 import './objectShelf'
 import './objectShelfSmall'
+import './objectTable'
 
 tick()
 
