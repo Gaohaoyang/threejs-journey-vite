@@ -1,7 +1,15 @@
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js'
-import { MeshStandardMaterial, Group, Mesh } from 'three'
+import {
+  MeshStandardMaterial,
+  Group,
+  Mesh,
+  TextureLoader,
+  SRGBColorSpace,
+  RepeatWrapping,
+} from 'three'
 import { scene } from './scene'
 import { floorAndWalls, wireframe } from './objectConstant'
+import { startLoading } from '../utils/LoadManagerWithProgress'
 
 // (182 - 33 * 5 - 3.7 * 2) / 4 = 2.4
 const shelfWidth = 18.2
@@ -32,11 +40,59 @@ group.position.set(
   -floorZLength / 2 + shelfWidth / 2 + 2,
 )
 
-const shelfMaterial = new MeshStandardMaterial({
-  roughness: 0.9,
-  metalness: 0.4,
-  color: 0xffffff,
+// texture
+const shelfTextureLoadManager = startLoading({ title: 'Shelf Texture' })
+const shelfTextureLoader = new TextureLoader(shelfTextureLoadManager)
+const shelfColorTexture = shelfTextureLoader.load(
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/texture/wood/VeneerWhiteOakRandomMatched001_COL_1K_METALNESS.png',
+)
+shelfColorTexture.colorSpace = SRGBColorSpace
+const shelfNormalTexture = shelfTextureLoader.load(
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/texture/wood/VeneerWhiteOakRandomMatched001_NRM_1K_METALNESS.png',
+)
+const shelfAmbientOcclusionTexture = shelfTextureLoader.load(
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/texture/wood/VeneerWhiteOakRandomMatched001_AO_1K_METALNESS.png',
+)
+const shelfRoughnessTexture = shelfTextureLoader.load(
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/texture/wood/VeneerWhiteOakRandomMatched001_ROUGHNESS_1K_METALNESS.png',
+)
+const shelfMetalnessTexture = shelfTextureLoader.load(
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/texture/wood/VeneerWhiteOakRandomMatched001_METALNESS_1K_METALNESS.png',
+)
+const shelfDisplacementTexture = shelfTextureLoader.load(
+  'https://cdn.jsdelivr.net/gh/Gaohaoyang/pics/texture/wood/VeneerWhiteOakRandomMatched001_DISP_1K_METALNESS.png',
+)
+shelfColorTexture.wrapS =
+  shelfColorTexture.wrapT =
+  shelfNormalTexture.wrapS =
+  shelfNormalTexture.wrapT =
+  shelfAmbientOcclusionTexture.wrapS =
+  shelfAmbientOcclusionTexture.wrapT =
+  shelfRoughnessTexture.wrapS =
+  shelfRoughnessTexture.wrapT =
+  shelfMetalnessTexture.wrapS =
+  shelfMetalnessTexture.wrapT =
+  shelfDisplacementTexture.wrapS =
+  shelfDisplacementTexture.wrapT =
+    RepeatWrapping
+
+const repeat = 0.3
+shelfColorTexture.repeat.set(repeat, repeat)
+shelfNormalTexture.repeat.set(repeat, repeat)
+shelfAmbientOcclusionTexture.repeat.set(repeat, repeat)
+shelfRoughnessTexture.repeat.set(repeat, repeat)
+shelfMetalnessTexture.repeat.set(repeat, repeat)
+shelfDisplacementTexture.repeat.set(repeat, repeat)
+
+export const shelfMaterial = new MeshStandardMaterial({
   wireframe,
+  map: shelfColorTexture,
+  normalMap: shelfNormalTexture,
+  aoMap: shelfAmbientOcclusionTexture,
+  roughnessMap: shelfRoughnessTexture,
+  metalnessMap: shelfMetalnessTexture,
+  displacementMap: shelfDisplacementTexture,
+  displacementScale: 0.006,
 })
 
 const boardV1 = new Mesh(
