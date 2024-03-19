@@ -13,6 +13,17 @@ const shelfInnerWidth = 3.3
 const roundSegments = 3
 const roundRadius = 0.05
 
+export const shelfMeasurements = {
+  shelfWidth,
+  shelfHeight,
+  shelfDepth,
+  shelfBorderBoardThickness,
+  shelfBoardThickness,
+  shelfInnerWidth,
+  roundSegments,
+  roundRadius,
+}
+
 const { floorXLength, floorZLength, ny } = floorAndWalls
 const group = new Group()
 group.position.set(
