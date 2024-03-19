@@ -62,7 +62,7 @@ scene.add(pointLightCameraHelper)
 pointLightCameraHelper.visible = false
 
 // spot light
-const spotLight = new SpotLight(0xffffff, 30, 60, Math.PI * 0.1, 0.6, 1)
+const spotLight = new SpotLight(0xffffff, 30, 60, Math.PI * 0.11, 0.6, 1)
 spotLight.position.set(floorAndWalls.floorXLength / 2 - 3, 6, -6)
 spotLight.target.position.set(floorAndWalls.floorXLength / 2 - 3, -floorAndWalls.ny, -6)
 spotLight.castShadow = true
@@ -79,7 +79,7 @@ scene.add(spotLightCameraHelper)
 spotLightCameraHelper.visible = false
 
 // spot light2
-const spotLight2 = new SpotLight(0xffffff, 30, 60, Math.PI * 0.1, 0.6, 1)
+const spotLight2 = new SpotLight(0xffffff, 30, 60, Math.PI * 0.11, 0.6, 1)
 spotLight2.position.set(floorAndWalls.floorXLength / 2 - 3, 6, 6)
 spotLight2.target.position.set(floorAndWalls.floorXLength / 2 - 3, -floorAndWalls.ny, 6)
 spotLight2.castShadow = true
@@ -96,7 +96,7 @@ scene.add(spotLightCameraHelper2)
 spotLightCameraHelper2.visible = false
 
 // spot light3
-const spotLight3 = new SpotLight(0xffffff, 30, 60, Math.PI * 0.1, 0.6, 1.5)
+const spotLight3 = new SpotLight(0xffffff, 30, 60, Math.PI * 0.19, 0.6, 1.5)
 spotLight3.position.set(-(floorAndWalls.floorXLength / 2 - 1), 6.8, 6)
 spotLight3.target.position.set(-(floorAndWalls.floorXLength / 2), -floorAndWalls.ny, 6)
 spotLight3.castShadow = true
@@ -113,7 +113,7 @@ scene.add(spotLightCameraHelper3)
 spotLightCameraHelper3.visible = false
 
 // spot light4
-const spotLight4 = new SpotLight(0xffffff, 30, 60, Math.PI * 0.1, 0.6, 1.5)
+const spotLight4 = new SpotLight(0xffffff, 30, 60, Math.PI * 0.19, 0.6, 1.5)
 spotLight4.position.set(-(floorAndWalls.floorXLength / 2 - 1), 6.8, -6)
 spotLight4.target.position.set(-(floorAndWalls.floorXLength / 2), -floorAndWalls.ny, -6)
 spotLight4.castShadow = true
