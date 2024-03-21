@@ -14,6 +14,7 @@ import './objectShelf'
 import './objectShelfSmall'
 import './objectTable'
 import './objectCurtain'
+import './objectBlinds'
 import './gui'
 
 tick()

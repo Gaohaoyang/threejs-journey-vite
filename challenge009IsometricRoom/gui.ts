@@ -7,6 +7,7 @@ import {
   turnOffSpotLights,
 } from './lights'
 import { openCurtain } from './objectCurtain'
+import { closeBlind1 } from './objectBlinds'
 import { controls } from './controls'
 
 // Debug GUI
@@ -15,6 +16,9 @@ const debugObject = {
   spotLight: true,
   openCurtain: () => {
     openCurtain()
+  },
+  closeBlind1: () => {
+    closeBlind1()
   },
 }
 
@@ -34,4 +38,5 @@ gui
     }
   })
 gui.add(controls, 'autoRotate')
-gui.add(debugObject, 'openCurtain')
+// gui.add(debugObject, 'openCurtain')
+gui.add(debugObject, 'closeBlind1')
