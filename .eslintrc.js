@@ -28,5 +28,6 @@ module.exports = {
         allowNullableObject: true,
       },
     ],
+    '@typescript-eslint/space-before-function-paren': 'off',
   },
 }

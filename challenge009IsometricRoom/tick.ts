@@ -6,6 +6,10 @@ import { renderer } from './renderer'
 import { scene } from './scene'
 import { viewHelper } from './viewHelper'
 import { groupConstructionBoxHelper } from './objectFloorAndWalls'
+import { world } from './physicsWorld'
+// import { updateParticles } from './objectCurtain'
+import { blindAnimation } from './objectBlind'
+import { blindAnimation2 } from './objectBlind2'
 
 // clock
 const clock = new Clock()
@@ -21,9 +25,15 @@ export const tick = () => {
 
   // Update controls
   controls.update()
+
+  // updateParticles()
+  world.fixedStep()
+
   const delta = clock.getDelta()
 
   if (viewHelper.animating) viewHelper.update(delta)
+  blindAnimation(delta)
+  blindAnimation2(delta)
 
   // Render
   renderer.render(scene, camera)

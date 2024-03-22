@@ -25,3 +25,7 @@ export const listenResize = (
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
   })
 }
+
+export const degreeToRadians = (degree: number) => {
+  return (degree * Math.PI) / 180
+}

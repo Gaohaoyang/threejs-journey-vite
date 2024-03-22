@@ -1,9 +1,7 @@
-import { gui } from './gui'
 import { listenResize } from '../utils'
 import { sizes } from './utils'
 import { camera } from './camera'
 import { renderer } from './renderer'
-import { controls } from './controls'
 import { tick } from './tick'
 import './lights'
 import './axesHelper'
@@ -15,9 +13,11 @@ import './objectRug'
 import './objectShelf'
 import './objectShelfSmall'
 import './objectTable'
+// import './objectCurtain'
+import './objectBlind'
+import './objectBlind2'
+import './gui'
 
 tick()
 
 listenResize(sizes, camera, renderer)
-
-gui.add(controls, 'autoRotate')
