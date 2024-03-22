@@ -13,8 +13,9 @@ import './objectRug'
 import './objectShelf'
 import './objectShelfSmall'
 import './objectTable'
-import './objectCurtain'
-import './objectBlinds'
+// import './objectCurtain'
+import './objectBlind'
+import './objectBlind2'
 import './gui'
 
 tick()

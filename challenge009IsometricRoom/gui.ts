@@ -6,19 +6,41 @@ import {
   turnOnSpotLights,
   turnOffSpotLights,
 } from './lights'
-import { openCurtain } from './objectCurtain'
-import { closeBlind1 } from './objectBlinds'
+// import { openCurtain } from './objectCurtain'
+import { closeBlind1, openBlind1, liftBlind1, dropBlind1 } from './objectBlind'
+import { closeBlind2, openBlind2, liftBlind2, dropBlind2 } from './objectBlind2'
 import { controls } from './controls'
 
 // Debug GUI
 const gui = new GUI()
 const debugObject = {
   spotLight: true,
-  openCurtain: () => {
-    openCurtain()
-  },
+  // openCurtain: () => {
+  //   openCurtain()
+  // },
   closeBlind1: () => {
     closeBlind1()
+  },
+  openBlind1: () => {
+    openBlind1()
+  },
+  liftBlind1: () => {
+    liftBlind1()
+  },
+  dropBlind1: () => {
+    dropBlind1()
+  },
+  closeBlind2: () => {
+    closeBlind2()
+  },
+  openBlind2: () => {
+    openBlind2()
+  },
+  liftBlind2: () => {
+    liftBlind2()
+  },
+  dropBlind2: () => {
+    dropBlind2()
   },
 }
 
@@ -40,3 +62,10 @@ gui
 gui.add(controls, 'autoRotate')
 // gui.add(debugObject, 'openCurtain')
 gui.add(debugObject, 'closeBlind1')
+gui.add(debugObject, 'openBlind1')
+gui.add(debugObject, 'liftBlind1')
+gui.add(debugObject, 'dropBlind1')
+gui.add(debugObject, 'closeBlind2')
+gui.add(debugObject, 'openBlind2')
+gui.add(debugObject, 'liftBlind2')
+gui.add(debugObject, 'dropBlind2')
