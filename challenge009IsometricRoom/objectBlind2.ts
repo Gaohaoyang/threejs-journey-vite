@@ -142,7 +142,7 @@ export const blindAnimation2 = (delta: number) => {
           blindItem.position.y += delta * moveSpeed * index
         })
       } else {
-        console.log('lifted')
+        // console.log('lifted')
         isLiftingBlind1 = false
       }
     }
@@ -151,8 +151,13 @@ export const blindAnimation2 = (delta: number) => {
       blind1.forEach((blindItem, index) => {
         blindItem.position.y -= delta * moveSpeed * index
       })
+      if (blind1[0].rotation.x < degreeToRadians(15)) {
+        blind1.forEach((blindItem) => {
+          blindItem.rotation.x += delta * rotationSpeed
+        })
+      }
     } else {
-      console.log('dropped')
+      // console.log('dropped')
       isDroppingBlind1 = false
     }
   }

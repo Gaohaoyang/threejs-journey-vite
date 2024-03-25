@@ -1,15 +1,17 @@
 import { Raycaster, type Intersection } from 'three'
 import { sizes } from './utils'
 import { camera } from './camera'
-import { toggleOpenCloseBlind1 } from './objectBlind'
-import { toggleOpenCloseBlind2 } from './objectBlind2'
+import { toggleOpenCloseBlind1, toggleLiftDropBlind1 } from './objectBlind'
+import { toggleOpenCloseBlind2, toggleLiftDropBlind2 } from './objectBlind2'
 import {
   windowBlind1Area as objectBlind,
   windowBlind2Area as objectBlind2,
+  windowBlind1AreaUp,
+  windowBlind2AreaUp,
 } from './objectBlindsForClickArea'
 import { showCursorTip, hideCursorTip } from './cursorTip'
 
-const objectsToTest = [objectBlind, objectBlind2]
+const objectsToTest = [objectBlind, objectBlind2, windowBlind1AreaUp, windowBlind2AreaUp]
 
 /**
  * Raycaster
@@ -48,26 +50,28 @@ window.addEventListener('mousedown', () => {
 })
 window.addEventListener('mouseup', (event) => {
   if (+Date.now() - deltaTime < 300) {
-    console.log('mouseup click----')
+    // console.log('mouseup click----')
     mouse.x = (event.clientX / sizes.width) * 2 - 1
     mouse.y = -(event.clientY / sizes.height) * 2 + 1
     if (currentIntersect) {
-      console.log('clicked object', currentIntersect.object.name)
+      // console.log('clicked object', currentIntersect.object.name)
       switch (currentIntersect.object.name) {
         case 'windowBlind1Area':
-          console.log('clicked windowBlind1Area')
+          // console.log('clicked windowBlind1Area')
           toggleOpenCloseBlind1()
           break
         case 'windowBlind2Area':
-          console.log('clicked windowBlind2Area')
+          // console.log('clicked windowBlind2Area')
           toggleOpenCloseBlind2()
           break
-        // case objectBlind2:
-        //   console.log('clicked objectBlind2')
-        //   break
-        // case object3:
-        //   console.log('clicked object3')
-        //   break
+        case 'windowBlind1AreaUp':
+          // console.log('clicked windowBlind1AreaUp')
+          toggleLiftDropBlind1()
+          break
+        case 'windowBlind2AreaUp':
+          // console.log('clicked windowBlind2AreaUp')
+          toggleLiftDropBlind2()
+          break
         default:
           break
       }
@@ -80,7 +84,7 @@ export const intersectObjects = () => {
 
   if (intersects.length) {
     if (!currentIntersect || currentIntersect.object !== intersects[0].object) {
-      console.log('mouse enter', intersects[0].object.name)
+      // console.log('mouse enter', intersects[0].object.name)
       document.documentElement.style.cursor = 'pointer'
 
       switch (intersects[0].object.name) {
@@ -90,7 +94,12 @@ export const intersectObjects = () => {
         case 'windowBlind2Area':
           showCursorTip('Click here to open/close blinds 2')
           break
-
+        case 'windowBlind1AreaUp':
+          showCursorTip('Click here to lift/drop blinds 1')
+          break
+        case 'windowBlind2AreaUp':
+          showCursorTip('Click here to lift/drop blinds 2')
+          break
         default:
           break
       }
@@ -99,7 +108,7 @@ export const intersectObjects = () => {
     ;[currentIntersect] = intersects
   } else {
     if (currentIntersect) {
-      console.log('mouse leave', intersects)
+      // console.log('mouse leave', intersects)
       document.documentElement.style.cursor = 'auto'
       hideCursorTip()
     }
