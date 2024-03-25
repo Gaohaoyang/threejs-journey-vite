@@ -1,15 +1,11 @@
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js'
-import {
-  Group,
-  MeshStandardMaterial,
-  Mesh,
-} from 'three'
+import { Group, MeshStandardMaterial, Mesh, BoxHelper } from 'three'
 import { floorAndWalls, wireframe, windowFrame } from './objectConstant'
 import { scene } from './scene'
 import { degreeToRadians } from '../utils'
 
-const blindItemWidth = windowFrame.frameWidthInner / 2 + 0.1
-const blindItemDepth = 0.8
+export const blindItemWidth = windowFrame.frameWidthInner / 2 + 0.1
+export const blindItemDepth = 0.8
 const blindItemGap = blindItemDepth - 0.04
 const blindThickness = 0.03
 const blindCounts = Math.ceil(windowFrame.frameHeightInner / blindItemGap)
@@ -50,12 +46,43 @@ group.add(...blind1)
 
 scene.add(group)
 
+// groupConstructionBoxHelper
+export const groupConstructionBoxHelper = new BoxHelper(group)
+groupConstructionBoxHelper.visible = false
+scene.add(groupConstructionBoxHelper)
+
+// animation
+
 const rotationSpeed = 1
 const moveSpeed = 0.15
 let isClosingBlind1 = false
 let isOpeningBlind1 = false
 let isLiftingBlind1 = false
 let isDroppingBlind1 = false
+let openStatus = true
+let dropStatus = true
+
+export const toggleOpenCloseBlind1 = () => {
+  if (dropStatus) {
+    if (openStatus) {
+      closeBlind1()
+      openStatus = false
+    } else {
+      openBlind1()
+      openStatus = true
+    }
+  }
+}
+
+export const toggleLiftDropBlind1 = () => {
+  if (dropStatus) {
+    liftBlind1()
+    dropStatus = false
+  } else {
+    dropBlind1()
+    dropStatus = true
+  }
+}
 
 export const closeBlind1 = () => {
   isClosingBlind1 = true
@@ -115,7 +142,7 @@ export const blindAnimation = (delta: number) => {
           blindItem.position.y += delta * moveSpeed * index
         })
       } else {
-        console.log('lifted')
+        // console.log('lifted')
         isLiftingBlind1 = false
       }
     }
@@ -124,8 +151,13 @@ export const blindAnimation = (delta: number) => {
       blind1.forEach((blindItem, index) => {
         blindItem.position.y -= delta * moveSpeed * index
       })
+      if (blind1[0].rotation.x < degreeToRadians(15)) {
+        blind1.forEach((blindItem) => {
+          blindItem.rotation.x += delta * rotationSpeed
+        })
+      }
     } else {
-      console.log('dropped')
+      // console.log('dropped')
       isDroppingBlind1 = false
     }
   }

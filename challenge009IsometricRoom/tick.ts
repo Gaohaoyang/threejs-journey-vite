@@ -10,6 +10,7 @@ import { world } from './physicsWorld'
 // import { updateParticles } from './objectCurtain'
 import { blindAnimation } from './objectBlind'
 import { blindAnimation2 } from './objectBlind2'
+import { setFromCamera, intersectObjects } from './raycaster'
 
 // clock
 const clock = new Clock()
@@ -34,6 +35,9 @@ export const tick = () => {
   if (viewHelper.animating) viewHelper.update(delta)
   blindAnimation(delta)
   blindAnimation2(delta)
+
+  setFromCamera()
+  intersectObjects()
 
   // Render
   renderer.render(scene, camera)
