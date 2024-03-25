@@ -1,9 +1,5 @@
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js'
-import {
-  Group,
-  MeshStandardMaterial,
-  Mesh,
-} from 'three'
+import { Group, MeshStandardMaterial, Mesh, BoxHelper } from 'three'
 import { floorAndWalls, wireframe, windowFrame } from './objectConstant'
 import { scene } from './scene'
 import { degreeToRadians } from '../utils'
@@ -15,7 +11,7 @@ const blindThickness = 0.03
 const blindCounts = Math.ceil(windowFrame.frameHeightInner / blindItemGap)
 
 const { floorXLength, floorZLength, ny } = floorAndWalls
-const group = new Group()
+export const group = new Group()
 group.position.set(
   -floorXLength / 2 + blindItemWidth + blindItemWidth / 2 + 3.6,
   -ny + blindItemGap * blindCounts + 0.5,
@@ -43,6 +39,7 @@ for (let i = 0; i < blindCounts; i++) {
   blindItem.receiveShadow = true
   blindItem.castShadow = true
   blindItem.rotation.set(degreeToRadians(15), 0, 0)
+  blindItem.name = 'blind2'
   blind1.push(blindItem)
 }
 
@@ -50,12 +47,42 @@ group.add(...blind1)
 
 scene.add(group)
 
+// groupConstructionBoxHelper
+export const groupConstructionBoxHelper = new BoxHelper(group)
+groupConstructionBoxHelper.visible = false
+scene.add(groupConstructionBoxHelper)
+
 const rotationSpeed = 1
 const moveSpeed = 0.15
 let isClosingBlind1 = false
 let isOpeningBlind1 = false
 let isLiftingBlind1 = false
 let isDroppingBlind1 = false
+
+let openStatus = true
+let dropStatus = true
+
+export const toggleOpenCloseBlind2 = () => {
+  if (dropStatus) {
+    if (openStatus) {
+      closeBlind2()
+      openStatus = false
+    } else {
+      openBlind2()
+      openStatus = true
+    }
+  }
+}
+
+export const toggleLiftDropBlind2 = () => {
+  if (dropStatus) {
+    liftBlind2()
+    dropStatus = false
+  } else {
+    dropBlind2()
+    dropStatus = true
+  }
+}
 
 export const closeBlind2 = () => {
   isClosingBlind1 = true

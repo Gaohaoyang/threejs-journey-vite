@@ -17,6 +17,7 @@ import './objectTable'
 import './objectBlind'
 import './objectBlind2'
 import './gui'
+import './objectBlindsForClickArea'
 
 tick()
 
