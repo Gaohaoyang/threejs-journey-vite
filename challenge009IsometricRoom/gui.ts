@@ -10,6 +10,7 @@ import {
 import { closeBlind1, openBlind1, liftBlind1, dropBlind1 } from './objectBlind'
 import { closeBlind2, openBlind2, liftBlind2, dropBlind2 } from './objectBlind2'
 import { controls } from './controls'
+import { screenLift, screenDrop, toggleDropAndLift } from './objectScreen'
 
 // Debug GUI
 const gui = new GUI()
@@ -42,6 +43,15 @@ const debugObject = {
   dropBlind2: () => {
     dropBlind2()
   },
+  liftScreen: () => {
+    screenLift()
+  },
+  dropScreen: () => {
+    screenDrop()
+  },
+  toggleDropAndLift: () => {
+    toggleDropAndLift()
+  },
 }
 
 export { gui, debugObject }
@@ -69,3 +79,6 @@ gui.add(controls, 'autoRotate')
 // gui.add(debugObject, 'openBlind2')
 // gui.add(debugObject, 'liftBlind2')
 // gui.add(debugObject, 'dropBlind2')
+// gui.add(debugObject, 'liftScreen')
+// gui.add(debugObject, 'dropScreen')
+// gui.add(debugObject, 'toggleDropAndLift')

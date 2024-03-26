@@ -6,11 +6,12 @@ import { renderer } from './renderer'
 import { scene } from './scene'
 import { viewHelper } from './viewHelper'
 import { groupConstructionBoxHelper } from './objectFloorAndWalls'
-import { world } from './physicsWorld'
+// import { world } from './physicsWorld'
 // import { updateParticles } from './objectCurtain'
 import { blindAnimation } from './objectBlind'
 import { blindAnimation2 } from './objectBlind2'
 import { setFromCamera, intersectObjects } from './raycaster'
+import { screenAnimation } from './objectScreen'
 
 // clock
 const clock = new Clock()
@@ -28,13 +29,15 @@ export const tick = () => {
   controls.update()
 
   // updateParticles()
-  world.fixedStep()
+  // world.fixedStep()
+  // cannonDebugger.update()
 
   const delta = clock.getDelta()
 
   if (viewHelper.animating) viewHelper.update(delta)
   blindAnimation(delta)
   blindAnimation2(delta)
+  screenAnimation(delta)
 
   setFromCamera()
   intersectObjects()
