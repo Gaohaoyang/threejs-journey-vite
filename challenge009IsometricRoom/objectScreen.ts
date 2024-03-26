@@ -1,4 +1,4 @@
-import { MeshStandardMaterial, Mesh, BoxGeometry, Group } from 'three'
+import { MeshStandardMaterial, Mesh, BoxGeometry, Group, MeshBasicMaterial } from 'three'
 import { scene } from './scene'
 
 const screenWidth = 16 * 1.8
@@ -68,3 +68,16 @@ export const toggleDropAndLift = () => {
 }
 
 scene.add(screenGroup)
+
+const opacity = 0
+
+export const screenArea = new Mesh(
+  new BoxGeometry(screenWidth, screenHeight, screenThickness),
+  new MeshBasicMaterial({ color: 0x00ff00, transparent: true, opacity, wireframe: true }),
+)
+
+screenArea.rotation.y = Math.PI / 2
+screenArea.position.set(-16, -2, 0)
+screenArea.name = 'screenArea'
+
+scene.add(screenArea)

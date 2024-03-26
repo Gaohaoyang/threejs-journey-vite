@@ -19,6 +19,7 @@ import './objectBlind2'
 import './gui'
 import './objectBlindsForClickArea'
 import './objectScreen'
+// import './objectCoke'
 
 tick()
 

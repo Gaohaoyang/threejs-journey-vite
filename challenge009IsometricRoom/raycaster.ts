@@ -10,8 +10,15 @@ import {
   windowBlind2AreaUp,
 } from './objectBlindsForClickArea'
 import { showCursorTip, hideCursorTip } from './cursorTip'
+import { screenArea, toggleDropAndLift } from './objectScreen'
 
-const objectsToTest = [objectBlind, objectBlind2, windowBlind1AreaUp, windowBlind2AreaUp]
+const objectsToTest = [
+  objectBlind,
+  objectBlind2,
+  windowBlind1AreaUp,
+  windowBlind2AreaUp,
+  screenArea,
+]
 
 /**
  * Raycaster
@@ -72,6 +79,9 @@ window.addEventListener('mouseup', (event) => {
           // console.log('clicked windowBlind2AreaUp')
           toggleLiftDropBlind2()
           break
+        case 'screenArea':
+          toggleDropAndLift()
+          break
         default:
           break
       }
@@ -99,6 +109,9 @@ export const intersectObjects = () => {
           break
         case 'windowBlind2AreaUp':
           showCursorTip('Click here to lift/drop blinds 2')
+          break
+        case 'screenArea':
+          showCursorTip('Click here to lift/drop screen')
           break
         default:
           break
