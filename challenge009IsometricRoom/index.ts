@@ -18,6 +18,7 @@ import './objectBlind'
 import './objectBlind2'
 import './gui'
 import './objectBlindsForClickArea'
+import './objectScreen'
 
 tick()
 
