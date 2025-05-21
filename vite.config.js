@@ -13,6 +13,8 @@ const entryPoints = fs.readdirSync(__dirname).reduce((entries, dir) => {
   if (fs.statSync(fullDir).isDirectory() && fs.existsSync(entry)) {
     entries[dir] = entry
   }
+  console.log('entries ----')
+  console.log(entries)
   return entries
 }, {})
 
