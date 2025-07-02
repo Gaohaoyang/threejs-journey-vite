@@ -18,7 +18,7 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0(cannon-es@0.20.0)(three@0.177.0)(typescript@5.8.3)
       lil-gui:
-        specifier: ^0.19.2
+        specifier: ^0.19.0
         version: 0.19.2
       three:
         specifier: ^0.177.0
